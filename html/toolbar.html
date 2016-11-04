@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="../js/task.js"></script>
+<script type="text/javascript" src="../js/toolbar.js"></script>
+<script type="text/javascript" src="../js/muti-config.json"></script>
+
+<style type="text/css">
+body{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background:white;
+}
+</style>
+<style type="text/css">
+<!--
+ 
+* {margin:0; padding:0; font-size:12px;}
+ul,li {list-style-type:none;}
+#main_box{display:inline-flex}
+.select_box {width:230px; border:1px solid #ccc; padding-right:20px; padding-left:10px; background:url(107.gif) no-repeat 160px center; position:relative;}
+.select_box span {cursor:pointer; display:block; line-height:20px; width:100%; height:20px; overflow:hidden;}
+.select_box ul li {cursor:pointer;}
+.select_box:hover  .son_ul  {display:inline-block} 
+.select_box:hover  .son_ul li {display:inline-block}
+.son_ul {display: none;width:259px; position:absolute; left:0; top:20px; border:1px dashed #ccc; background:#fff;height: 80px; overflow-x: hidden; overflow-y: auto; }
+.son_ul li {display: none; line-height:20px; padding-left:10px; width:169px}
+.son_ul li:hover{background:#ccc;}
+ 
+-->
+</style>
+</head>
+<body  style="overflow:hidden">
+	<div id="pfinduct_plugin_head" style="height:25px;text-align:left;background-color:#6292DD;z-index:99;">
+		<span style="color: white; font-size: 10pt; font-weight: bold; margin-left: 10px;">导控插件</span>
+		<span id="closepic" style="display:inline-block;float:left;cursor:pointer;margin-top:5px;margin-right:5px;margin-left:5px;width:16px;z-index:999999; height:16px;background-image:url(../img/facebook_dlg_close.png);background-position:30px" ></span>
+	</div>
+	<div id="pfinduct_plugin_iftoolbar">
+		<div id="pfinduct_plugin_detail" style="margin-top:8px;">
+			<div id="pfinduct_plugin_firstl" style="text-align: left;">
+				<span style="margin-left: 10px; font-size: 10pt;">当前任务:</span>
+					<ul id="main_box">
+					  <li class="select_box">
+						    <span attr-index="-1" attr-value="常规灌水任务">常规灌水任务</span>
+							<ul class="son_ul">
+							  <li attr-index="-1" attr-value="常规灌水任务" >常规灌水任务</li>
+							  
+							</ul>
+					  </li>
+					</ul>
+			</div>
+			<div id="pfinduct_plugin_secondl" style="text-align: left;">
+				<span style="margin-left: 10px; font-size: 10pt;"> 未签收的任务：
+					<a href="" state="1" id="notsign">0</a>
+				</span>
+				<span style="margin-left: 10px; font-size: 10pt;"> 执行中的任务：
+					<a href="" state="2" id="executing">0</a>
+				</span>
+				<span style="margin-left: 10px; font-size: 10pt;" id="resultarea">已回传成果：
+					<a href="" id="taskresult">0</a>
+				</span>
+			</div>
+			<div id="pfinduct_plugin_fourthl" style="text-align: left;">
+				<span style="margin-left: 10px;">
+			
+					<span style="text-align: center;display:block;margin-top:8px">
+						<input type='button' class="screen_button" resulttype='1'  value='发贴截屏' />
+						<input type='button' class="screen_button" resulttype='2'  value='回贴截屏' />
+						
+					</span> 
+				</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

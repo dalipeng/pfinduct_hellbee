@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+
+<title>素材选择</title>
+<link href="../css/continue/global.css" rel="stylesheet" type="text/css" />
+<link href="../css/continue/rule_page_pupop.css" rel="stylesheet" type="text/css" />
+<link href="../js/tip/css/jquery.poshytip.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="../js/continue/puppop.js"></script>
+<script type="text/javascript" src="../js/tip/jquery.poshytip.js"></script>
+
+<script type="text/javascript" src="../js/muti-config.json"></script>
+
+<style type="text/css">
+	.mAdd{ display:none; }
+	.fold{float:right;cursor:pointer;margin-right:8px}
+	.trigleup,.trigledown{
+		float:right;
+		height:16px;
+		width:16px;
+		background-image:url("../img/continue/icoSpring.png");
+		background-repeat:no-repeat;	
+		overflow:hidden;
+		white-space:nowrap;
+	}
+	.trigleup{
+		background-position: 0 0;
+	}
+	.trigledown{
+		background-position: -16px 0px;
+	}
+	.c-account{display:inline-block; height:20px;line-height:20px;border: 1px solid #efefef; border-radius: 5px; padding: 5px; cursor: pointer; width: 120px; text-overflow: ellipsis; white-space: nowrap;overflow:hidden;margin: 5px;}
+</style>
+</head>
+<body>
+<div id="main">
+    <!--弹窗开始-->
+    <div class="pupop">
+        <div class="content">
+            <!--弹出框左侧开始-->
+            <div class="leftBar">
+                <!--弹出框左侧快速输入框开始-->
+                <div class="clear">
+                	<span class="grayButton right" id="randbtn">
+                		<span>选择</span>
+                	</span>
+                	<label class="countLabel">
+                		您可以随机选择<span>条</span>
+                	</label>
+                	<input type="text" class="count" id="randNum"/>
+                </div>         
+                <!--弹出框左侧快速输入框结束--> 
+                <!--弹出框左侧树列表开始-->  
+                <div class="treeSearch" style="position:relative">
+                	<input type="text" id="search_bd" class="treeTop"/>
+                	<input type="button" class="treeSubmit"/>
+                	<span id="delkeyword" style="position:absolute;background:url(../img/continue/selectClose.png) no-repeat;width:10px;height:10px;right: 25px; top: 10px;display:none"></span>
+                </div>
+<!--                 <div class="tree"></div> -->
+                <div class="tree"></div>
+                <!--弹出框左侧树列表结束-->
+            </div>
+            <!--弹出框左侧结束-->
+            <!--弹出框右侧开始-->
+            <div class="rightBar">
+                <div class="listWrap" style="overflow-x:hidden">
+                	<ul>
+                		<!--  <li class="hover">这个问题说的很好<span class="close"></span></li>  -->
+                    	<!--需要选中效果的话增加 class="hover"-->
+                    	
+                    </ul>
+                </div>
+                <div style="border: 1px #D3D8DB solid;height: 30px;width: 435px;border-top: none;">
+                    	<span id="mess" style="font-size: 14px; color: red; padding-left: 20px;"></span>
+                    	<span class="grayButton right" id="addMaterial">
+               				<span>添加自定义素材</span>
+               			</span>
+               			<span class="grayButton right" id="clearAllMater">
+               				<span>清空</span>
+               			</span>
+               			
+                </div>
+                <h2 class="view">
+                    <span class="edit">编辑</span>
+                    <span class="save grayButton"><span>保存</span></span>
+                    <span id="mPreview"><span >素材预览-</span>	<span id="pretitle" class='prvtitleelipse'></span></span>
+                    <span id="mAdd" class="mAdd"><span >素材添加-</span>	<span ><input type="text" id="mTitle" style='border: 1px solid #D3D8DB;'  /></span></span>
+                </h2>
+                <div class="viewContent"></div>
+                <textarea class="viewInput"></textarea>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <!--弹出框右侧结束-->
+        <!--底部菜单栏开始-->
+        <div class="pupopBottom">
+          <span class="BlueButton" id="ok"><span >确定</span></span>
+          <span class="BlueButton" id="cancel"><span>取消</span></span>
+        </div>
+        <!--底部菜单栏结束-->
+    </div>
+    <!--弹窗结束-->
+</div>
+</body>
+</html>

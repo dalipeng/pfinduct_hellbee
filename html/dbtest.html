@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/util.js"></script>
+	<script type="text/javascript" src="../js/user.js"></script>
+	<script type="text/javascript" src="../js/muti-config.json"></script>
+	<script type="text/javascript" src="../js/dbtest.js"></script>
+	<script type="text/javascript" src="../js/options.js"></script>
+</head>
+<body style="font-size:12px">
+<div>sql&nbsp;&nbsp;语句：<input type='text' name='sql' size="200" id='sql' value='select * from pfinductmutitask order by ID desc ' />
+ <input type='button' value='执行' id='execute' />
+ <input type='button' value='清空' id='clear' />
+</div>
+<div>
+	<div>任务名称：<input type='text'  id='name' size='50' value='回帖任务1'/></div>
+	<div>发帖&nbsp;&nbsp;url：<input type='text'  id='url'  size='50' value='http://tieba.baidu.com/p/1970209572' /></div>
+	<div>发帖次数：<input type='text'  id='num' size='50' value='3'/></div>
+	<input type='button' value='创建任务' id='action1' />
+	<input type='button' value='创建并执行任务' id='action2' />
+</div>
+
+<div id='resultarea'>
+	<table id="resulttable" border=1>
+	</table>
+</div>
+
+cookie名称:<input type="text" id="ck" name='ck' />
+url:<input type="text" id="ckurl" name='ckurl' />
+<input type='button' value='删除' id="ckcx" />
+</br>
+
+<input type="button" value="多线程执行" id="thread" />
+
+
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+var sitetypedic =[
+	{//百度贴吧--论坛
+		"reg": /http:\/\/tieba\.baidu\.com.*/,
+		"config":"论坛",
+		"value":"1"
+	},
+	{//搜狐论坛
+		"reg" : /http:\/\/club\.(.*)\.sohu\.com.*/,
+		"config":"论坛",
+		"value":"1"
+	},
+	{//搜狐新闻
+		"reg" : /http:\/\/quan\.sohu\.com\/pinglun.*/,
+		"config":"新闻",
+		"value":"2"
+	},
+	
+	{//凤凰发帖
+		"reg":/http:\/\/bbs(.*)\.ifeng\.com.*/,
+		"config":"论坛",
+		"value":"1"
+	}, 
+	{//凯迪发帖
+		"reg":/http:\/\/upfile\d\.kdnet\.net.*/,
+		"config": "论坛",
+		"value" : "1"
+	},
+	{//新华发帖(http://forum.home.news.cn/addnewaction.jsp)
+		"reg":/http:\/\/forum\.home\.news\.cn.*/,
+		"config":"论坛",
+		"value" : "1"
+	},
+	{//天涯发帖
+		"reg":/http:\/\/bbs\.tianya\.cn.*/,
+		"config":"论坛",
+		"value":"1"
+	},
+	{//铁血发帖(新兵5分钟内只能发两个主题帖)
+		"reg":/^http:\/\/bbs\.tiexue\.net.*/,
+		"config":"论坛",
+		"value" : "1"
+	},
+	{//华声
+		"reg":/http:\/\/bbs\.voc\.com\.cn.*/,
+		"config":"论坛",
+		"value":"1"
+	},
+	{//新青年发帖
+		"reg":/http:\/\/bbs\.we54\.com.*/,
+		"config":"论坛",
+		"value":"1"
+	}, 
+	{//西祠发帖
+		"reg":/http:\/\/www\.xici\.net.*/,
+		"config":"论坛",
+		"value":"1"
+		
+	},{//海安零距离发帖
+        "reg":/http:\/\/www\.haljl\.com.*/,
+        "config":"论坛",
+		"value":"1"
+    },{//海安网发帖
+        "reg":/http:\/\/www\.haianw\.com.*/,
+        "config":"论坛",
+		"value":"1"
+    }, {//濠滨论坛发帖
+        "reg":/http:\/\/bbs\.0513\.org.*/,
+        "config":"论坛",
+		"value" :　"1"
+    } ,
+    {//网易论坛回帖 
+        "reg":/^http:\/\/(.*)\.163\.com.*/,
+        "config":"论坛",
+		"value":"1"
+    },
+	{//网易论坛回帖 
+        "reg":/http:\/\/comment\.news\.163\.com.*/,
+        "config":"新闻",
+		"value":"2"
+    }, 
+    {//19楼论坛发帖
+        "reg":/^http:\/\/www\.19lou\.com.*/,
+        "config":"论坛",
+		"value" : "1"
+    }, 
+    {//qq新闻
+        "reg":/^http:\/\/coral\.qq\.com.*/,
+        "config":"新闻",
+		"value" : "2"
+    }, 
+    {//qq新闻
+        "reg":/^http:\/\/comment\.ifeng\.com.*/,
+        "config":"新闻",
+		"value" : "2"
+    }, 
+    {//新浪新闻
+        "reg":/http:\/\/comment5\.news\.sina\.com\.cn\/comment.*/,
+        "config":"新闻",
+		"value" : "2"
+    } , 
+    {//腾讯微博
+        "reg":/http:\/\/t\.qq\.com.*/,
+        "config":"微博",
+		"value" : "3"
+    }  , 
+    {//新浪微博
+        "reg":/http:\/\/weibo\.com.*/,
+        "config":"微博",
+		"value" : "3"
+    }
+	
+	
+	
+	
+]
+

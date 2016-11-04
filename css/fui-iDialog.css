@@ -1,0 +1,399 @@
+.fui-idialog{
+	position:absolute;
+	width:100%;
+	height:auto;
+	font-family:'Microsoft Yahei', Tahoma, Arial !important;
+	font-size:13px;
+}
+.idlg-shadow{
+	position:absolute;
+	left:0px;
+	top:0px;
+	height:100%;
+	width:100%;
+	box-shadow:5px 5px 5px #666;
+	-moz-box-shadow:5px 5px 5px #666;
+	-webkit-box-shadow:5px 5px 5px #666;
+	filter:progid:DXImageTransform.Microsoft.Blur(pixelradius=4);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Blur(pixelradius=4)";
+	background-color:#666\9;
+	z-index:-1;
+}
+/* 头部 */
+.idlg-wt-l, .idlg-wt-r, .idlg-wt-c{
+	background-image:url(../images/idlg-sprite.png);
+	background-repeat:no-repeat;
+}
+.idlg-wt-l{
+	background-position:0 0;
+	width:10px;
+}
+.idlg-wt-r{
+	background-position:right -30px;
+	width:10px;
+}
+.idlg-wt-c{
+	background-position:0 -60px;
+	background-repeat:repeat-x;
+	height:30px;
+	overflow:hidden;
+}
+/* 标题 */
+.idlg-title{
+	text-align:center;
+	color:#fff;
+	font-weight:bold;
+	cursor:default;
+}
+/* toolbar */
+.idlg-toolbar-panel{}
+.idlg-tb-l, .idlg-tb-r, .idlg-tb-c{
+	background:url(../images/itoolbar-bg.gif) repeat-x 0 bottom;
+	border-bottom:0px solid #2d6caa;
+}
+.idlg-tb-l{
+	width:1px;
+	font-size:0px;
+	border-left:1px solid #bebebe;
+}
+.idlg-tb-r{
+	width:1px;
+	font-size:0px;
+	border-right:1px solid #bebebe;
+}
+.idlg-tb-c{
+	padding:5px 0;
+}
+.idlg-toolbar{
+	padding:3px 0px;
+}
+
+/* 中部 */
+.idlg-wm-l{
+	border-left:1px solid #bebebe;
+	width:1px;
+	font-size:0px;
+	white-space:nowrap;
+	background-color:#fff;
+}
+.idlg-wm-r{
+	border-right:1px solid #bebebe;
+	width:1px;
+	font-size:0px;
+	white-space:nowrap;
+	background-color:#fff;
+}
+.idlg-wm-c{
+	background-color:#f9f9f9;
+}
+.idlg-bdy-inner{
+	position:relative;
+	float:left;
+	display:block;
+	width:100%;
+	height:auto;
+	text-align:left;
+	z-index:6;
+	overflow:hidden;
+}
+
+/* 底部 */
+.idlg-wb-l, .idlg-wb-r, .idlg-wb-c{
+	height:1px;
+	font-size:0px;
+	line-height:1px;
+	border-bottom:1px solid #bebebe;
+	background-color:#f9f9f9;
+}
+.idlg-wb-l{
+	width:1px;
+	border-left:1px solid #bebebe;
+}
+.idlg-wb-r{
+	width:1px;
+	border-right:1px solid #bebebe;
+}
+.idlg-wb-c{
+}
+
+/* status-bar */
+.idlg-statusbar-panel{background-color:#f9f9f9;}
+.idlg-stb-l, .idlg-stb-r, .idlg-stb-c{
+	border-bottom:0px solid #2d6caa;
+}
+.idlg-stb-l{
+	width:1px;
+	font-size:0px;
+	border-left:1px solid #bebebe;
+}
+.idlg-stb-r{
+	width:1px;
+	font-size:0px;
+	border-right:1px solid #bebebe;
+}
+.idlg-stb-c{
+}
+.idlg-statusbar{
+	padding:6px 0px;
+}
+
+.idlg-url-loading{
+	position:absolute;
+	bottom:1px;
+	left:1px;
+	background-color:#dedede;
+	padding:3px 30px 3px 3px;
+	font-size:12px;
+	color:#7a7a7a;/*#6f6f6f*/
+	z-index:20;
+	overflow:hidden;
+	
+	-moz-border-radius-topright:5px 5px;
+	-webkit-border-top-right-radius:5px 5px;
+	border-top-right-radius:5px 5px;
+}
+
+/* 头部最大化，关闭等按钮 */
+.idlg-wbtns{
+	position:absolute;
+	top:7px;
+	right:9px;
+	margin:0;
+	pading:0;
+	z-index:1;
+}
+.idlg-wbtns a{
+	background-image:url(../images/idlg-close.png);
+	background-repeat:no-repeat;
+	width:18px;
+	height:18px;
+	font-size:1px;
+	line-height:1px;
+	display:block;
+	float:right;
+	margin:0 0 0 7px;
+}
+.idlg-wbtns .idlg-w-close{
+	background-position:0 0;
+}
+.idlg-wbtns .idlg-w-close-dis{
+	background-position:0 -20px;
+	cursor:default;
+}
+
+/* 隐藏页面滚动条 */
+.idlg-lock-scroll{
+	overflow:hidden;
+}
+.idlg-lock-scroll > body{
+	padding-right:18px;
+	overflow:hidden;
+}
+/* 遮罩层 */
+.idlg-mask-layer{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	display:none;
+}
+.idlg-mask-layer div{
+	width:100%;
+	height:100%;
+	background-color:#aaa;
+	opacity:0.2;
+	filter:alpha(opacity=20);
+}
+.idlg-frm-mask{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background:none;
+	background-color:#ffffff;
+	opacity:0;
+	filter:alpha(opacity=0);
+	z-index:1;
+	display:none;	
+}
+
+/* 用于让Dialog获取光标的元素样式 */
+.idlg-focus{
+	position:absolute;
+	left:0;
+	top:0;
+	width:0;
+	height:0;
+	font-size:0;
+	outline:0 none;
+	text-decoration:none;
+	overflow:hidden;
+	z-index:1;
+}
+
+.idlg-alert .idlg-statusbar{
+	text-align:right;
+}
+/* 底部按钮 */
+.idlg-btn-panel{
+	padding:0px 5px 0px 0px;
+}
+.idlg-btn{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	text-align:center;
+	background:url(../images/idlg-btn.gif) no-repeat right -81px;
+	padding-right:25px;
+	margin:0px 12px 0px 0px;
+	text-decoration:none;
+	outline:none;
+}
+.idlg-btn .idlg-btn-txt{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	height:27px;
+	line-height:25px;
+	background:url(../images/idlg-btn.gif) no-repeat 0 -54px;
+	padding-left:25px;
+	color:#191919;
+	text-shadow:0px 1px 0px #f2f2f2;
+}
+.idlg-btn:hover, .idlg-btn-focus{
+	background-position:right -27px;
+}
+.idlg-btn:hover .idlg-btn-txt, 
+.idlg-btn-focus .idlg-btn-txt{
+	background-position:0 0;
+	text-shadow:0px 1px 0px #dce2e7;
+}
+
+/* Resize */
+.idlg-resize{
+	position:absolute;
+	overflow:hidden;
+	border:1px dashed #536376;	
+	display:none;
+}
+.resize-N, .resize-NE, .resize-SE, .resize-S, .resize-SW, .resize-NW{
+	position:absolute;
+	font-size:1px;
+	overflow:hidden;
+}
+.resize-N, .resize-S{
+	width:100%;
+	height:4px;
+	z-index:2;
+}
+.resize-NE, .resize-SE, .resize-SW, .resize-NW{
+	width:10px;
+	height:10px;
+	z-index:3;
+}
+.resize-W, .resize-E{
+}
+.resize-N{
+	cursor:n-resize;	
+}
+.resize-NE{
+	right:0px;
+	top:0px;
+	cursor:ne-resize;	
+}
+.resize-E{
+	cursor:e-resize;	
+}
+
+.resize-SE{
+	right:0px;
+	bottom:0px;
+	cursor:se-resize;	
+}
+.resize-S{
+	left:0px;
+	bottom:0px;
+	cursor:s-resize;
+}
+.resize-SW{
+	left:0px;
+	bottom:0px;
+	cursor:sw-resize;	
+}
+.resize-W{
+	cursor:w-resize;
+}
+.resize-NW{
+	left:0px;
+	top:0px;
+	cursor:nw-resize;	
+}
+
+/* 扩展的提示框 */
+.idlg-alert{ }
+.idlg-alert-icon{
+	width:90px;
+	padding:10px 0;
+}
+.idlg-alert-msg{
+	line-height:23px;
+	padding:12px 20px 12px 3px;
+	word-wrap:break-word;
+	word-break:break-all;
+	white-space:normal;
+	white-space:-moz-pre-wrap;
+}
+
+/* prompt */
+.idlg-prompt-panel{
+	display:block;
+	width:320px;
+	margin:0 auto;
+}
+.idlg-prompt-title{
+	padding:1px 0;
+}
+.idlg-prompt-input{
+	width:100%;
+	padding:6px 8px;
+	background-color:#fff;
+	border:1px solid #9c9c9c;
+	color:#0c4260;
+	overflow:hidden;
+}
+.idlg-prompt-textarea{
+	width:100%;
+	height:85px;
+	padding:4px;
+	background-color:#fff;
+	border:1px solid #9c9c9c;
+	color:#0c4260;
+	overflow:auto;
+}
+
+.idlg-ico-alert, .idlg-ico-confirm, .idlg-ico-warning, .idlg-ico-error,.idlg-ico-success, .idlg-ico-wait{
+ 	width:60px;
+	height:60px;
+	margin-left:5px;
+	background-image:url(../images/idlg-alerts.png);
+	background-repeat:no-repeat;	
+	display:block;
+}
+.idlg-ico-alert{
+	background-position:0 0;
+}
+.idlg-ico-confirm{
+	background-position:0 -60px;
+}
+.idlg-ico-warning{
+	background-position:0 -120px;
+}
+.idlg-ico-success{
+	background-position:0 -240px;
+}
+.idlg-ico-error{
+	background-position:0 -180px;
+}

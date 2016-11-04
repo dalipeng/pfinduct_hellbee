@@ -1,0 +1,46 @@
+﻿<style>
+<!--
+	ul li{list-style:none}
+	.materialtype{margin:0  0 0  -40px;color:#369bd7;width:100%;  }
+	.materialtype li{float:left; border-right:1px solid gray;border-bottom:1px solid gray;background-color:#ddd;cursor:pointer;padding:3px 3px 3px 0}
+	.materialtype li:hover{color:#555555; border-bottom:none;background-color:#fff;}
+	.materialtype li:last-child{border-right:none;}
+	.materialtype li.cur{background-color:#fff; border-bottom:none;}
+	
+	
+	
+-->
+</style>
+<div id="material_select" class="material_dialog">
+<div class="selectcon">
+	<div class="matterType">
+		<ul class="materialtype">
+			<li data-attr="4" style="margin-left: 40px;" class="cur">评论库</li>
+			<li data-attr="1">境内文库</li>
+			<li data-attr="2">境外文库</li>
+		</ul>
+        <ul class="typeContent">
+        </ul>
+    </div>
+    <div class="division"></div>
+    <div class="matterTitle">
+    	<div class="searcBox">
+        	<input type="text" id="titleWord" />
+             <a class="ue-state-default">
+            	<span class="ue-icon ue-icon-search left"></span>
+            </a>
+        </div>
+        <div style="clear:both;"></div>
+         <ul class="matterContent">
+        </ul>
+    </div>
+    
+    <div class="preview">
+        <div class="label" >素材预览：<span id="material_title"></span></div>
+        <textarea style="width: 535px;height: 133px;" id="material_content"></textarea>
+        <!-- 
+        	<div class="previewContent" id="material_content" style="overflow:auto"> </div>
+         -->
+	</div>
+</div>
+</div>

@@ -1,0 +1,63 @@
+@charset "utf-8";
+html{ overflow:auto;}
+body{background:#eee;}
+
+/*顶部固定栏样式*/
+.headInterval{float:left;width:4px;height:42px;margin:0 6px;background:url(../../img/continue/headInterval.png) no-repeat}
+.logo{float:left;width:165px;height:42px;margin:0 6px;background:url(../../img/continue/logo.png) no-repeat}
+.headLine{float:left;width:2px;height:42px;background:url(../../img/continue/headLine.png) no-repeat}
+.close{float:right;width:30px;height:42px;background:url(../../img/continue/close.png) no-repeat}
+.close a{display:block;width:30px;height:42px;text-indent:-9999px;}
+
+/*主框架样式*/
+#header{width:100%;height:42px;background:url(../../img/continue/headBg.png) repeat-x;z-index:999} 
+#contentHead{height:37px;margin:10px 10px 0 10px;background:url(../../img/continue/headTitleBg.png) repeat-x;border:1px #d3dae9 solid;border-bottom:none}
+#main{padding-left:183px;margin:0 10px;border:1px #d3dae9 solid;border-top:none;background:#fff}
+#sidebar{float:left;width:183px;height:100%;margin-left:-183px;background:#fff;}
+#content{float:left;position:relative;width:100%;margin:0px 0 0 -1px; padding-bottom:38px;border-left:1px #d3dae9 solid;z-index:2;}
+#footer{position:fixed;bottom:0px;lefe:0px;width:100%;height:23px;line-height:23px;background:url(../../img/continue/footerBg.png) repeat-x;z-index:999}
+
+/*总标题样式*/
+#contentHead h1{float:left;height:31px;line-height:31px;font-size:14px;margin:6px 0 0 10px;background:url(../../img/continue/titleBgLeft.png) no-repeat left center;}
+#contentHead span{float:left;height:31px;background:url(../../img/continue/titleBgRight.png) no-repeat right center;padding:0 10px;}
+/*侧边栏样式*/
+.postButton{display:inline-block;height:31px;line-height:31px;width:162px;margin:10px;background:url(../../img/continue/postBgLeft.png) no-repeat left center;font-size:14px;border:none;cursor:pointer;white-space:nowrap}
+.postButton span{display:inline-block;float:left;height:31px;line-height:31px;padding:0 60px 0 20px;background:url(../../img/continue/postBgRight.png) no-repeat right top;}
+.postButton .ico{display:inline-block;float:left;margin:6px;height:16px;width:14px;background:url(../../img/continue/postIco.png) no-repeat}
+.postButton:hover{color:#ff5a00;}
+#sidebar ul{margin:0 10px;overflow:auto;}
+#sidebar ul li{height:27px;line-height:27px;padding:5px 10px;}
+#sidebar ul li:hover{background:#f3f3f3;color:#ff5a00}
+#sidebar ul li:hover a.ico{display:inline-block}
+#sidebar ul li span{display:inline-block;float:left;cursor:pointer}
+#sidebar ul li.select{background:#3178ba;}
+#sidebar ul li.select {color:#fff}
+#sidebar ul li a.ico{display:none;float:right;width:13px;height:15px;margin-top:5px;background:url(../../img/continue/icoSpring.png) no-repeat -17px -16px;}
+#sidebar ul li.select a.ico{background:url(../../img/continue/icoSpring.png) no-repeat -49px -16px;display:inline-block}
+
+/*iframe底部工具条*/
+.toolbar{position:absolute;bottom:-1px;left:0px;height:38px;width:100%;background:url(../../img/continue/footerBarBg.png) repeat-x}
+
+/*底部状态栏样式*/
+#footer span{display:inline-block;height:23px;color:#3b404a;}
+#footer span.user{margin-left:10px;padding-left:18px;background:url(../../img/continue/manico.png) no-repeat left center}
+#footer span.vertical {width:2px;height:23px;background:url(../../img/continue/footerVertical.png) no-repeat;margin:0 4px;}
+#footer span.copyright{margin-right:2px;padding-right:16px;background:url(../../img/continue/copyright.png) no-repeat right 10px}
+#footer span.copyright b{margin:0 4px;font-weight:normal;}
+
+/*iframe页面样式*/
+.rule_page{background:#fff;padding:0 10px;}
+
+/*弹出层样式*/
+.pupopWrap{display:none;position:absolute;top:10px;left:40%;margin-left:-280px;width:700px;height:520px;*height:483px;z-index:9999}
+
+/*弹出框主框架*/
+.pupopWrap .title{height:33px;line-height:33px;background:url(../../img/continue/pupopTitleLeft.png) no-repeat left center; cursor:move; margin-right:4px;}
+.pupopWrap .title span{display:inline-block;float:left;height:33px;width:667px;padding:0 16px;background:url(../../img/continue/pupopTitleRight.png) no-repeat right center;font-size:14px;color:#fff;font-weight:bold;}
+.pupopWrap .title span .close{display:inline-block;float:right;width:19px;height:19px;margin:8px -6px 0 0;background:url(../../img/continue/close2.png) no-repeat;cursor:pointer}
+
+.left{float:left}
+.right{float:right}
+
+/**任务标题缩略*/
+.tasktitleelipse{width: 110px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 

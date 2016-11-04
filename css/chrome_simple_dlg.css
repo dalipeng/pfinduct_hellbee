@@ -1,0 +1,165 @@
+.chrome_simple{
+	border:1px solid #B8B8B8;
+	background-color:#fff;
+}
+/* 头部 */
+.chrome_simple .idlg-wt-l, 
+.chrome_simple .idlg-wt-r, 
+.chrome_simple .idlg-wt-c{
+	background-image:none;
+}
+.chrome_simple .idlg-wt-l, 
+.chrome_simple .idlg-wt-r{
+	width:20px;
+}
+
+.chrome_simple .idlg-wt-c{
+	height:40px;
+	border-bottom:1px solid #EEE;
+}
+.chrome_simple .idlg-shadow{
+	display:block;
+	box-shadow:1px 3px 5px #666;
+	-moz-box-shadow:1px 3px 5px #666;
+	-webkit-box-shadow:1px 3px 5px #666;
+	filter:progid:DXImageTransform.Microsoft.Blur(pixelradius=2);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Blur(pixelradius=2)";
+	background-color:#666\9;
+}
+/* 标题 */
+.chrome_simple .idlg-title{
+	text-align:left;
+	color:#53637d;
+	margin-top:0px;
+	font-size:20px;
+	text-shadow:0px 1px 0px #fff;
+}
+/* 中部 */
+.chrome_simple .idlg-wm-l, 
+.chrome_simple .idlg-wm-r{
+	width:20px;
+	font-size:0px;
+	white-space:nowrap;
+	border:0 none;
+	background-image:none;
+	background-color:transparent;
+}
+.chrome_simple .idlg-wm-c{
+	background-color:#fff;
+}
+/* 底部 */
+.chrome_simple .idlg-wb-l, 
+.chrome_simple .idlg-wb-r, 
+.chrome_simple .idlg-wb-c{
+	height:3px;
+	font-size:0px;
+	line-height:1px;
+	background-image:none;
+	border:0px;
+}
+.chrome_simple .idlg-wb-l, 
+.chrome_simple .idlg-wb-r{
+	width:20px;
+}
+
+/* 头部最大化，关闭等按钮 */
+.idlg-wbtns{
+	top:16px;
+	right:16px;
+}
+.idlg-wbtns a{
+	background-image:url(../img/facebook_dlg_close.png);
+	background-repeat:no-repeat;
+	width:15px;
+	height:15px;
+}
+.idlg-wbtns .idlg-w-close{
+	background-position:-15px 0;
+}
+.idlg-wbtns .idlg-w-close:hover{
+	background-position:-30px 0;
+}
+.idlg-wbtns .idlg-w-close-dis,
+.idlg-wbtns .idlg-w-close-dis:hover{
+	background-position:0 0;
+	cursor:default;
+}
+
+/* 底部按钮 */
+.idlg-btn-panel {
+    padding:0 0 0 0;
+}
+.idlg-btn{
+	background:url(../img/facebook_dlg_btn.png) no-repeat right -135px;
+	padding-right:20px;
+	margin:0px 10px 0px 0px;
+	text-decoration:none;
+	outline:none;
+}
+.idlg-btn .idlg-btn-txt{
+	background:url(../img/facebook_dlg_btn.png) no-repeat 0 -108px;
+	padding-left:20px;
+	color:#191919;
+	text-shadow:0px 1px 0px #fff;
+}
+.idlg-btn:hover{
+	background-position:right -189px;
+}
+.idlg-btn:hover .idlg-btn-txt{
+	background-position:0 -162px;
+}
+
+.idlg-btn-focus{
+	background-position:right -27px;
+}
+.idlg-btn-focus .idlg-btn-txt{
+	background-position:0 0;
+	color:#325509;
+}
+.idlg-btn-focus:hover{
+	background-position:right -81px;
+}
+.idlg-btn-focus:hover .idlg-btn-txt{
+	background-position:0 -54px;
+}
+
+.idlg-url-loading{
+	left:15px;
+	bottom:10px;
+}
+
+/* alert 等提示框 */
+.idlg-alert-notitle .idlg-wt-l{
+	width:13px;
+	background-position:0 -153px;
+}
+.idlg-alert-notitle .idlg-wt-r{
+	width:13px;
+	background-position:right -166px;
+}
+.idlg-alert-notitle .idlg-wt-c{
+	background-position:0 -205px;
+	height:13px;
+	font-size:0px;
+}
+
+.idlg-alert-notitle .idlg-title{
+	display:none;
+}
+
+.idlg-alert-notitle .idlg-wb-l{
+	width:13px;
+	background-position:0 -179px;
+}
+.idlg-alert-notitle .idlg-wb-r{
+	width:13px;
+	background-position:right -192px;
+}
+.idlg-alert-notitle .idlg-wb-c{
+	height:13px;
+	background-position:0 -218px;
+	background-repeat:repeat-x;
+}
+.idlg-alert-notitle .idlg-statusbar {
+	padding:8px 0 0px 0;
+}

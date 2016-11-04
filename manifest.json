@@ -1,0 +1,277 @@
+{
+	"name": "舆情导控插件V1.6.8(Hellbee edition)",
+	"version": "1.6.8",
+	"manifest_version": 2,
+	"minimum_chrome_version": "22.0",
+	"update_url": "https://58.214.246.39:9988/pfinduct/update.xml",
+	"description":"烽火互联网舆情导控系统-浏览器插件(梨树网安修改版)",
+	"icons": {
+        "16": "img/logo_16.png",
+        "32": "img/logo_32.png",
+        "64": "img/logo_64.png",
+        "128": "img/logo_128.png"
+    },
+	"permissions":[
+		"tabs",
+		"http://*/*",
+		"https://*/*",
+		"cookies",
+		"notifications",
+		"<all_urls>"
+	],
+	"options_page": "html/options.html",
+	"background": {
+	    "page": "html/background.html",
+	    "persistent": true
+  	},
+	"content_scripts" : [
+	{
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches":["*://*/pfinduct/*","*://*/file/*"],
+      "js" : ["js/jquery.js","dialog/jquery-ui.js","js/contentscript/public.account.js","js/contentscript/public.js","js/contentscript/contentscript.js","hellbee.js","data.js"],
+      "css" : ["css/hellbee.css"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+	{
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : ["js/contentscript/removeAD.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://tieba.baidu.com/i/*username=*"
+      ],
+      "js" : ["js/contentscript/baiduzone.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://tieba.baidu.com/*"
+      ],
+      "js" : ["js/contentscript/baidu.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://tieba.baidu.com/home/*username=*"
+      ],
+      "js" : ["js/contentscript/baiduzone.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.163.com/*"
+      ],
+      "js" : ["js/contentscript/163.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.news.sina.com.cn/*"
+      ],
+      "js" : ["js/contentscript/sina.com.cn.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.sohu.com/*"
+      ],
+      "js" : ["js/contentscript/sohu.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.ifeng.com/*"
+      ],
+      "js" : ["js/contentscript/ifeng.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.tianya.cn/*"
+      ],
+      "js" : ["js/contentscript/tianya.cn.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.voc.com.cn/*"
+      ],
+      "js" : ["js/contentscript/voc.com.cn.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.kdnet.net/*"
+      ],
+      "js" : ["js/contentscript/kdnet.net.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://bbs.we54.com/*"
+      ],
+      "js" : ["js/contentscript/we54.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.xici.net/*"
+      ],
+      "js" : ["js/contentscript/xici.net.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://bbs.tiexue.net/*"
+      ],
+      "js" : ["js/contentscript/tiexue.net.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+        "http://*.home.news.cn/*"
+      ],
+      "js" : ["js/contentscript/news.cn.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    { "matches" : [
+        "http://www.haianw.com/*"
+      ],
+      "js" : ["js/contentscript/haianw.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    { "matches" : [
+        "http://www.haljl.com/*"
+      ],
+      "js" : ["js/contentscript/haljl.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    { "matches" : [
+        "http://*.0513.org/*"
+      ],
+      "js" : ["js/contentscript/0513.org.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },	
+	{ "matches" : [
+        "http://*.19lou.com/*"
+      ],
+      "js" : ["js/contentscript/19lou.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },	
+	
+    {
+      "matches" : [
+        "http://*.qq.com/*"
+      ],
+      "js" : ["js/contentscript/qq.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+	{
+      "matches" : [
+        "http://*.sz.zj.cn/*"
+      ],
+      "js" : ["js/contentscript/sz.zj.cn.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+	{
+      "matches" : [
+        "http://*.e0575.cn/*"
+      ],
+      "js" : ["js/contentscript/0575.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+	{
+      "matches" : [
+        "http://*.weibo.com/*"
+      ],
+      "js" : ["js/contentscript/weibo.com.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+	
+    {
+	    "matches": ["http://*/*", "https://*/*", "ftp://*/*", "file://*/*"],
+	    "js": ["page.js", "shortcut.js"],
+	    "css": ["css/style.css"],
+	    "run_at": "document_end"
+	 }, 
+	 {
+	    "matches": ["http://*/*", "https://*/*", "ftp://*/*", "file://*/*"],
+	    "js": ["isLoad.js"],
+	    "run_at": "document_start"
+    },
+    {
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches":["*://*/pfinduct/*","*://*/file/*"],
+      "js" : ["js/end.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    }
+        ,
+    {
+      "matches" : [
+        "http://*/pfinduct/*",
+        "https://*/pfinduct/*"
+      ],
+      "js" : ["js/checkversion.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    }
+    ],
+    "plugins": [ {
+	    "path": "plugin/screen_capture.dll"
+	  }, {
+	    "path": "plugin/screen_capture.so"
+	  }, {
+	    "path": "plugin/screen_capture_64.so"
+	  }, {
+	    "path": "plugin/screen_capture.plugin"
+	  } ],  
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",  
+    "default_locale": "en",
+    "web_accessible_resources":
+    [
+	    "html/material.html",
+	    "html/toolbar.html",
+	    "page_context.js",
+        "css/style.css"
+      ],
+	"browser_action": {
+      "default_title": "舆情导控插件V2.0",
+      "default_icon": "img/logo_32.png",
+      "default_popup": "html/popup.html"
+	}
+}

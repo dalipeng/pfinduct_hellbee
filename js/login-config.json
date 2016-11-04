@@ -1,0 +1,34 @@
+var loginconfig ={
+	"haianw.com":{
+	 "16":{
+		 "loginurl":"http://www.haianw.com/connect.php?mod=login&op=init&referer=index.php&statfrom=login_simple",
+		 "code":"var doc = $('#ptlogin_iframe').contents();if($('#switch_login',doc).length>0){$('#switch_login',doc)[0].click();};$('#u',doc).val('$USERNAME');$('#p',doc).val('$PASSWORD');setTimeout(function(){$('#login_button',doc)[0].click();},1000);"
+	 },
+	 "0":{
+	 		"loginurl":"http://www.haianw.com/",
+	 		"code":"$('#ls_username').val('$USERNAME');$('#ls_password').val('$PASSWORD');$('button[type=submit].pn').click();"
+	 }
+	 
+	},
+	"haljl.com":{
+	  "16":{
+	        "loginurl":"http://www.haljl.com/connect.php?mod=login&op=init&referer=index.php&statfrom=login_simple",
+	 		"code":"var doc = $('#ptlogin_iframe').contents();if($('#switch_login',doc).length>0){$('#switch_login',doc)[0].click();};$('#u',doc).val('$USERNAME');$('#p',doc).val('$PASSWORD');setTimeout(function(){$('#login_button',doc)[0].click();},1000);"
+	  },
+	 "0":{
+	 		"loginurl":"http://www.haljl.com/",
+	 		"code":"$('#ls_username').val('$USERNAME');$('#ls_password').val('$PASSWORD');$('button[type=submit].pn').click();"
+	 }
+	},
+	"19lou.com":{
+		"16":{
+			"loginurl":"http://www.19lou.com/outsite/login?appType=QQZone",
+			"code":"if ($('.ch_uin'))$('.ch_uin').click();var doc = $('#ptlogin_iframe').contents();if($('#switch_login',doc).length>0){$('#switch_login',doc)[0].click();};$('#u',doc).val('$USERNAME');$('#p',doc).val('$PASSWORD');setTimeout(function(){$('#login_button',doc)[0].click();},1000);"
+		},
+		"0":{
+			"loginurl":"http://www.19lou.com/login",
+			"code":" $('#userName').val('$USERNAME'); $('#userPass').val('$PASSWORD'); document.getElementById('loginButton').click();"
+		}
+	}
+};
+

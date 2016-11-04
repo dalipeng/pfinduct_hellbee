@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>发帖导航</title>
+<link type="text/css" rel="stylesheet" href="../css/main.css" />
+<link type="text/css" rel="stylesheet" href="../css/extra.css" />
+<script type="text/javascript" src="../js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="../js/tip/css/jquery.poshytip.css" />
+<script type="text/javascript" src="../js/tip/jquery.poshytip.js"></script>
+<script type="text/javascript" src="../js/search_nav.js"></script>
+
+<style type="text/css">
+	
+	#sitelist {font-size:14px;line-height:34px;width:600px;margin:0px;padding:0px;}
+	#sitelist a {
+	border:1px solid #e7e7e7;
+	display:block;padding-left:34px;height:32px;width:78px;float:left;margin:0px 6px 4px 0px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: hidden;
+	TEXT-DECORATION: none;
+	}
+	#sitelist A:hover, #sitelist a:focus {color:red;border:1px solid #bbb;}
+</style>
+</head>
+
+<body>
+<div class="navcon">
+<div class="searchBox ue-clear">
+	<div id="main" style="height:25px">
+    	<span class="title">发帖导航</span>
+    	<!-- 
+        <div class="input">
+            <input type="text" class="left error" value="" id="filter"/>
+            <button class="left"></button>
+        </div>
+    	 -->
+        
+    </div>
+</div>
+<div class="contentWarp">
+    <div class="nav">
+        <ul>
+            <li class="selected" attr="index1">支持论坛</li>
+        </ul>
+    </div>
+    <div class="tabContent">
+        <div id="sitelist">
+			<a href="http://tieba.baidu.com/" value3="http://tieba.baidu.com/" value2="agZpamluZDhyCwsSBFNpdGUY8y4M" target="_blank" title="百 度 贴吧" style="background-image: url(http://tieba.baidu.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">百度贴吧</a>
+			<a href="http://bbs.sina.com.cn/" value3="http://bbs.sina.com.cn/" value2="agZpamluZDhyCgsSBFNpdGUYBQw" target="_blank" title="新浪论坛 " style="background-image: url(http://bbs.sina.com.cn/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">新浪论坛</a>
+			<a href="http://club.sohu.com/" value3="http://club.sohu.com/" value2="agZpamluZDhyCwsSBFNpdGUY9S4M" target="_blank" title="搜狐社区 " style="background-image: url(http://club.sohu.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">搜狐社区</a>
+			<a href="http://bbs.qq.com/" value3="http://bbs.qq.com/" value2="agZpamluZDhyCwsSBFNpdGUY7wcM" target="_blank" title="腾讯论坛" style="background-image: url(http://bbs.qq.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">腾讯论坛</a>
+			<a href="http://bbs.163.com/" value3="http://bbs.163.com/" value2="agZpamluZDhyCwsSBFNpdGUY2TYM" target="_blank" title="网易论坛 " style="background-image: url(http://bbs.163.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">网易论坛</a>
+			<a href="http://bbs.ifeng.com/" value3="http://bbs.ifeng.com/" value2="agZpamluZDhyCwsSBFNpdGUYiicM" target="_blank" title="凤凰网论坛 " style="background-image: url(http://bbs.ifeng.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">凤凰网论坛</a>
+			<a href="http://www.tianya.cn/bbs/" value3="http://www.tianya.cn/bbs/" value2="agZpamluZDhyCwsSBFNpdGUY9C4M" target="_blank" title="天涯论坛 " style="background-image: url(http://www.tianya.cn/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">天涯论坛</a>
+			<a href="http://www.mop.com/" value3="http://www.mop.com/" value2="agZpamluZDhyCwsSBFNpdGUYvRcM" target="_blank" title="猫扑 " style="background-image: url(http://www.mop.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">猫 扑</a>
+			<a href="http://bbs.voc.com.cn/" value3="http://bbs.voc.com.cn/" value2="agZpamluZDhyCwsSBFNpdGUY9S4M" target="_blank" title="华声论坛 " style="background-image: url(http://bbs.voc.com.cn/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">华声论坛</a>
+			<a href="http://bbs.runsky.com/" value3="http://bbs.runsky.com/" value2="agZpamluZDhyCwsSBFNpdGUY1g8M" target="_blank" title="天健社区 " style="background-image: url(http://bbs.runsky.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">天健社区</a>
+			<a href="http://bbs.we54.com" value3="http://bbs.we54.com" value2="agZpamluZDhyCwsSBFNpdGUYox8M" target="_blank" title="新青年社区 " style="background-image: url(http://bbs.we54.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">新青年社区</a>
+			<a href="http://bbs.tiexue.net" value3="http://bbs.tiexue.net" value2="agZpamluZDhyCwsSBFNpdGUY2jYM" target="_blank" title="铁血社区 " style="background-image: url(http://bbs.tiexue.net/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">铁血社区</a>
+			<a href="http://bbs1.people.com.cn/" value3="http://bbs1.people.com.cn/" value2="agZpamluZDhyCgsSBFNpdGUYBgw" target="_blank" title="强国论坛" style="background-image: url(http://bbs1.people.com.cn/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">强国论坛</a>
+			<a href="http://club.china.com/" value3="http://club.china.com/" value2="agZpamluZDhyCwsSBFNpdGUYiicM" target="_blank" title="中华网论坛" style="background-image: url(http://club.china.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">中华网论坛</a>
+			<a href="http://club.kdnet.net/" value3="http://club.kdnet.net/" value2="agZpamluZDhyCgsSBFNpdGUYBww" target="_blank" title="凯迪社区 " style="background-image: url(http://kdnet.net/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">凯迪社区</a>
+			<a href="http://club.xilu.com/" value3="http://club.xilu.com/" value2="agZpamluZDhyCwsSBFNpdGUYph8M" target="_blank" title="西陆社区 " style="background-image: url(http://club.xilu.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">西陆社区</a>
+			<a href="http://forum.home.news.cn/" value3="http://forum.home.news.cn/" value2="agZpamluZDhyCwsSBFNpdGUYiycM" target="_blank" title="新华社区 " style="background-image: url(http://news.cn/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">新华社区</a>
+			<a href="http://bbs.huanqiu.com/" value3="http://bbs.huanqiu.com/" value2="agZpamluZDhyCgsSBFNpdGUYCAw" target="_blank" title="环球网论坛 " style="background-image: url(http://bbs.huanqiu.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">环球网论坛</a>
+			<a href="http://club.tom.com/" value3="http://club.tom.com/" value2="agZpamluZDhyCgsSBFNpdGUYJAw" target="_blank" title="TOM社区" style="background-image: url(http://club.tom.com/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">TOM社区</a>
+			<a href="http://www.xici.net/" value3="http://www.xici.net/" value2="agZpamluZDhyCgsSBFNpdGUYCQw" target="_blank" title="西祠胡同 " style="background-image: url(http://www.xici.net/favicon.ico); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">西祠胡同</a>
+			<div class="c"></div>
+		</div>
+    </div>
+</div>
+</div>
+</body>
+</html>

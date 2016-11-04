@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+/*全局样式*/
+html,body,div,table,td,th,tr,p,span,ol,ul,li,dl,dt,dd,img,a,h1,h2,h3,b,button,input{padding:0px;margin:0}
+html,body{*overflow:auto;}
+body{font-family: Arial,Helvetica,sans-serif;font-size:10pt;}
+img{border:none}
+ul,il,li{list-style:none}
+a{text-decoration:none}
+a:link,a:visited{color:#000;}
+a:hover{color:#ff5a00;}
+.clear::after {content:".";display:block;height:0;clear:both;visibility:hidden;}
+
+/*按钮样式*/
+.BlueButton,.grayButton,.grayButton:hover{float:left;height:29px;line-height:29px;background:url(../../img/continue/buttonBlueLeft.png) no-repeat left center;border:none;white-space:nowrap;margin:5px -6px 5px 14px;overflow:hidden}
+.BlueButton span,.grayButton span,.grayButton:hover span{display:inline-block;float:left;height:29px; line-height:29px;background:url(../../img/continue/buttonBlueRight.png) no-repeat right center;color:#fff;cursor:pointer;padding:0 14px;color:#fff}
+.grayButton{background:url(../../img/continue/buttonGreyLeft.png) no-repeat left top;}
+.grayButton span{background:url(../../img/continue/buttonGreyRight.png) no-repeat right top;color:#000;}
+.highlight{font-weight: bold; color: red;}

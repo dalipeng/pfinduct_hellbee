@@ -1,0 +1,11 @@
+.bee_toolbox{
+    backgroundColor: #FFE4B5;
+    opacity: 0.7;
+    border-top: 8px solid orange;
+    border-bottom: 8px solid orange;
+    border-right: 8px solid orange;
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+    padding: 10px;
+    text-align: center;
+}

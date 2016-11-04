@@ -1,0 +1,59 @@
+@charset "utf-8";
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td , i{margin:0;padding:0;border:0;
+font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+body {line-height:1.5;}
+table {border-collapse: collapse;border-spacing:0;}
+caption, th, td ,b,strong{text-align:left;font-weight:normal;}
+table, td, th {vertical-align:middle;}	
+blockquote:before, blockquote:after, q:before, q:after {content:"";}
+blockquote, q {quotes:"" "";}
+a img {border:none;}
+em,cite{font-style:normal;}
+body { background:#fff; font: 12px/1.5 Tahoma,'宋体';color:#3C3C3C;}
+h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
+a {text-decoration:none;cursor:pointer;}
+dl, dt, dd, ol, ul, li{ list-style:none;}
+
+/*index*/
+/**.nav{ width:117px; height:155px;border:1px solid #DCDCDC;background-color:#F5F5F5;}**/
+.nav li{ float:left; padding:4px 5px 4px 10px; width:90px;font-size:14px;}
+.nav li:first-child{width:100px;color:#000;}
+.nav li.item{ margin-left:5px;}
+.nav li.item:hover{ background:#477EF0;}
+.nav li.item:hover a {color:#FFF; text-decoration:none;}
+.nav li.item .icon.task{ float:left; margin:5px 10px 0 -3px;width:9px; height:9px; background:url(../img/icon_2_1.gif) no-repeat;}
+.nav li.item:hover .icon.task{background:url(../img/icon_2_2.gif) no-repeat;}
+.nav li.item .icon.nav{ float:left; margin:5px 10px 0 -3px;width:9px; height:9px; background:url(../img/icon_1_1.gif) no-repeat;}
+.nav li.item:hover .icon.nav{background:url(../img/icon_1_2.gif) no-repeat;}
+.tips .icon.tip{float:left; margin:3px 10px 0 0; width:16px; height:14px;background:url(../img/tip.gif) no-repeat; }
+.nav li.item .icon.post{ float:left; margin:5px 10px 0 -3px;width:9px; height:9px; background:url(../img/icon_3_1.gif) no-repeat;}
+.nav li.item:hover .icon.post{background:url(../img/icon_3_2.gif) no-repeat;}
+.nav li.item .icon.help{ float:left; margin:5px 10px 0 -3px;width:9px; height:9px; background:url(../img/icon_4_1.gif) no-repeat;}
+.nav li.item:hover .icon.help{background:url(../img/icon_4_2.gif) no-repeat;}
+.nav li.item .icon.count{ float:left; margin:5px 10px 0 -3px;width:10px; height:10px; background:url(../img/icon_5_1.gif) no-repeat;}
+.nav li.item:hover .icon.count{background:url(../img/icon_5_2.gif) no-repeat;}
+.nav li.item .icon.work{ float:left; margin:5px 10px 0 -3px;width:10px; height:10px; background:url(../img/icon_6_1.gif) no-repeat;}
+.nav li.item:hover .icon.work{background:url(../img/icon_6_2.gif) no-repeat;}
+.nav li.item .icon.bbs{ float:left; margin:5px 10px 0 -3px;width:10px; height:10px; background:url(../img/icon_7_1.gif) no-repeat;}
+.nav li.item:hover .icon.bbs{background:url(../img/icon_7_2.gif) no-repeat;}
+
+.tips span{ font-size:14px;}
+.tips span .count{ color:#CD0000;}
+
+/*nav*/
+.navcon #main{width:1000px;margin:30px auto;}
+.navcon .input{position:relative;width:617px;height:53px;margin:30px auto;background:url(../img/index_input_bg.png) no-repeat left top;z-index:2;}
+.navcon .input input[type=text]{color:#686868;height:22px;width:486px;margin:15px 5px 0 37px;cursor:text;line-height:22px;border:0;background:none;}
+.navcon button{width:71px;height:31px;margin:11px 0 0 2px;cursor:pointer;border:0;background:url(../img/search_button_71x31.png) no-repeat left top;}
+.navcon button:hover{background:url(../img/search_button_hover_71x31.png) no-repeat left bottom;}
+.navcon .title{display:inline-block; float:left;width:60px;margin:15px 5px 0 0;*margin-top:45px;font-size:14px;font-weight:bold; color:#000;z-index:1;}
+.navcon .nav{ float:left; width:150px;height:510px; padding:5px; background:#F5F5F5; border-right:1px solid #DEDEDE;}
+.navcon .nav ul{ margin-top:20px;}
+.navcon .nav ul li{float:left; width:155px; padding:5px 0;font-size:14px; color:#000000; text-align:center; cursor:pointer;border:1px solid #F5F5F5; border-right:0;}
+.navcon .nav ul li.selected{background:#FFF; border:1px solid #DEDEDE; border-right:0; font-weight:bold;}
+.navcon .tabContent{float:left; width:825px; height:500px;overflow:auto; padding:10px 0 0px 8px;}
+.navcon .contentWarp{margin:0 auto;width:1002px; height:520px; border:1px solid #DEDEDE;}
+.navcon .tabContentUl li{ float:left; width:132px; margin:0 10px 10px 0;font-size:14px; height:18px;}
+.navcon #index2,#index3{ display:none;}
+
+

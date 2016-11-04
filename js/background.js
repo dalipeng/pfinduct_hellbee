@@ -1,0 +1,1337 @@
+var background={};
+/**记录批量发帖任务**/
+var TASK={};
+//到后台获取任务时间间隔
+var delaytime=60*1000;
+//未签收任务
+var state1=0;
+//执行中任务
+var state2=0;
+//数据库对象
+var db=null;
+
+
+$(function(){
+	//验证用户
+	background.init();
+	//初始化table
+	//initTable();
+	background.getTask();
+	//循环调用
+	setInterval(background.getTask,delaytime);
+	//消息监听
+	chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+		 if ("backpost" == request.method) {
+		 		var pfinducturl = pfinduct.getStorageValue("user","pfinducturl");
+				var authkey = pfinduct.getStorageValue("user","authkey");
+
+
+				var url = request.key.url;
+				var uniquekey = request.key.uniquekey;
+				var num = request.key.num;
+				var displayname = request.key.displayname;
+				var content = request.key.content;
+
+		 		var data = {"authkey":authkey,"taskResultBean.url":url,"taskResultBean.requestbody":uniquekey,"taskResultBean.positivereplycount":num,
+				"taskResultBean.displayname":displayname,"taskResultBean.isChangeIP":"2","taskResultBean.isChangeAccount":"2","taskResultBean.keywords":content};
+				$.post(pfinducturl+"/netpf/newsreplyChrome!saveNewsReply.action",data,function(){alert("添加成功！请到导控系统->网评灌水->新闻引导 下查看");})
+
+
+		}else if((request.method == "currurl")){
+//		    var url = "";
+		    chrome.tabs.getSelected(null, function(tab) {
+				chrome.tabs.executeScript(tab.id,
+						{code:"top.location.href"},
+						function(res){
+						   sendResponse({data:res});
+				});
+			});
+		    return true;
+		}else if (request.method == "sendback"){
+		    chrome.tabs.getSelected(null, function(tab) {
+				chrome.tabs.executeScript(tab.id,
+					{code:"document.getElementsByName('btn_up').length"},
+					function(res){
+						if (res >  0) {
+							chrome.tabs.executeScript(tab.id,
+								{code:"var induct_sendbak_obj = document.getElementsByName('btn_up'); induct_sendbak_obj[induct_sendbak_obj.length-1].click()"},
+									function(res){
+
+
+									});
+						}else{
+							sendResponse({data:-1,res:-1});
+						}
+
+					});
+			});
+		    return true;
+		}else if (request.method == "showinsert"){
+	        	var obj = request.key;
+	        	var resulttype = (!!obj.resulttype) ? obj.resulttype : 2;
+
+
+				var flag = eval(request.data);
+				var data = {};
+			var code1 = "var data=pageInfoData;if(!data){data={};}$('#floatDiv').hide();var url=window.location.href;var title=$('title').text();data.url=url;if(!data.title){data.title=title;} data;";
+			chrome.tabs.getSelected(null, function(tab) {
+				chrome.tabs.executeScript(tab.id,
+					{code:code1},
+					function(res){
+						//console.log(res[0]);
+		//				alert(res[0]["displayname"]);
+
+				var response = res[0];
+
+				data.url=response.url;
+				var sitetype = 1;//1代表论坛
+				for (var i=0;key=sitetypedic[i++];) {
+					var reg = key["reg"];
+					if (reg && reg.test(data.url)) {
+						sitetype = key["value"];
+						break ;
+					}
+				}
+				var title = response.title || data.title;
+				if (title &&  60 < title.length) {
+					data.title = response.title.substring(0,60);
+				}else{
+					data.title=response.title;
+				}
+				data.accountname=response.accountname || data.accountname;
+				data.displayname=response.displayname || data.displayname;
+				data.forumname=response.forumname || data.forumname;
+				data.forumurl=response.forumurl || data.forumurl;
+				//从新闻端带过来的会在request.key.displayname带上displayname
+				if (!!request.key.displayname){
+					data.displayname =  request.key.displayname;
+					 data.accountname =  request.key.displayname;
+				}
+
+
+			var content =  "",high =100 ;
+			var postcontent = request.key.content||"";
+
+			var user = JSON.parse(localStorage["user"]);
+			var userid = user["userid"];
+
+
+			var taskid  = request.key.taskid;
+			var taskstr = localStorage['task'];
+			if (!!taskstr) {
+				taskid = JSON.parse(taskstr)["taskid"];
+			}
+			//对南京需求 新增热度和排名显示  add by xbding 2015/02/28
+			//热度
+			var heatnum =  request.key.heatnum || 0;
+			//排名
+			var ranknum =  request.key.ranknum || 0;
+
+			postcontent = postcontent.replace(/\r|\n|\"/gi,"").trim() || ""  ;
+
+
+/*			if (!flag || postcontent) {//如果插件不支持   就显示发帖
+
+				content = "<div style='height:40px;vertical-align: top;'>发帖内容：<textarea id='pfinduct_content' "+
+					" name='pfinduct_content' style='width:250px;height:100px;'> "+postcontent+"</textarea></div>";
+				height=300;
+			}else{
+				content = "<div style='height:40px;vertical-align: top;'>发帖内容：发帖内容几分钟后自动回传系统。</div>";
+				height=200;
+			}
+*/
+
+			content = "<div style='height:40px;vertical-align: top;'>发帖内容："+
+						"<textarea id='pfinduct_content'  name='pfinduct_content' style='width:250px;height:100px;'> "+postcontent+"</textarea>"+
+					"</div>";
+			height=370;
+			data.title = data.title.replace(/\"/g,"");
+			var sitetypestr = "<div style='height:30px;vertical-align: top;'>帖文站点类别:"+
+								"<label><input style='width:20px;height:16px' type='radio' name='sitetype' value='1'"+ ((sitetype == 1) ? 'checked=checked' :'') +">论坛&emsp;&emsp;"+
+								"</label>"+
+								"<label>"+
+									"<input style='width:20px;height:16px' type='radio' name='sitetype' value='2' "+ ((sitetype == 2) ? 'checked=checked' :'') +"  >新闻&emsp;&emsp;"+
+								"</label>"+
+								"<label>"+
+									"<input style='width:20px;height:16px' type='radio' name='sitetype' value='3' "+ ((sitetype == 3) ? 'checked=checked' :'') +"  >微博&emsp;&emsp;&emsp;"+
+								"</label>"+
+								"<label>"+
+									"<input style='width:20px;height:16px' type='checkbox' name='heat' id='induct_heat' value='1'>热帖"+
+								"</label>"+
+							"</div>";
+			//对南京需求 新增热度和排名显示  add by xbding 2015/02/28
+			var hottypestr = "<div style='height:30px;vertical-align: top;display:none;' id='pfinduct_hotres'>&emsp;"+
+								"<label>热帖排名："+
+									"<label>" +
+										"<input style='width:30px;height:16px' type='text' name='ranknum' value="+ ranknum +">"+
+									"</label>"+
+									"<label>&emsp;点赞数：</label>"+
+									"<label><input style='width:30px;height:16px' type='text' name='heatnum' value="+ heatnum +" ></label>"+
+							"</div>";
+
+			var  resulttypestr = "<div style='height:30px;vertical-align: top;margin-right: 170px;'>"+
+									"帖文类别:"+
+									"<label>"+
+										"<input style='width:20px;height:16px' type='radio' name='resulttype' value='1'"+ ((resulttype == 1) ? 'checked=checked' :'') +">发帖"+
+									"</label>"+
+									"<label>"+
+										"<input style='width:20px;height:16px' type='radio' name='resulttype' value='2' "+ ((resulttype == 2) ? 'checked=checked' :'') +"  >回帖"+
+									"</label>"+
+								"</div>";
+
+	        var showname  = data.accountname ? data.accountname : data.displayname ? data.displayname : "";
+			var code2 = "$('#pfinduct_content').parents('.ui-dialog').remove();" +
+						"$('#pfinduct_content').remove();" +
+						"$('#pfinduct_plugin_insertnameandcontent').parent().remove();" +
+						"$('#induct_heat').die().live('click',function(){" +
+							"if ($(this).attr('checked')) {" +
+								"$('#pfinduct_hotres').show(1000); "+
+								"$('input[name=sitetype]').eq(1).attr('checked','checked');"+
+							"} else {"+
+								"$('#pfinduct_hotres').hide(1000);}"+
+							"});" +
+						"$(\"<div>"+
+								"<div id='pfinduct_plugin_insertnameandcontent' style='margin-top:20px;margin-left: 20px;'>"+
+									"<div style='height:40px;'>发帖账号："+
+										"<input type='text' name='pfinduct_displayname' value='"+showname+"' id='pfinduct_displayname' "+
+			" style='width:250px;'>"+
+									"</div> "+
+									"<div style='height:40px;'>发帖标题："+
+										"<input type='text' value='"+data.title+"' style='width:250px;' id='pfinduct_title' "+
+			" name='pfinduct_title'></div> "+
+									sitetypestr + hottypestr + resulttypestr + content+
+							"</div></div>\").dialog({"+
+								" width:450, height:"+height+", "+ "modal:false, autoOpen:true, title:'输入回传内容', resizable:false, buttons:{ 		'确定':function(event,ui){ "+
+										"var displayname=$('#pfinduct_displayname').val();"+
+										"var title=$('#pfinduct_title').val();"+
+										"var content=$('#pfinduct_content').val();"+
+										" var sitetype=1;"+
+										"$('input[name=sitetype]').each(function(){"+
+												"if ($(this).attr(\"checked\")){"+
+													"sitetype = $(this).val()}}) ;"+
+													"var obj = {}; "+
+													"obj.resulttype=$('input[name=resulttype]:checked').val(); "+
+													"var heat = $('input[name=heat]:checked').val();"+
+													"var heatnum = $('input[name=heatnum]').val();"+
+													"var ranknum = $('input[name=ranknum]').val();"+
+													"obj.heat=heat;"+
+													"obj.title=title;"+
+													"obj.displayname=displayname;"+
+													"obj.sitetype=sitetype;"+
+													"obj.content=content;"+
+													"obj.ranknum=ranknum || 0;"+
+													"obj.heatnum=heatnum || 0;"+
+													"obj.userid="+userid+";"+
+													"obj.taskid="+taskid+
+													";console.log(obj);"+
+														"if (!displayname) return;"+
+														"if (!content) return;"+
+														"if (heat && !heatnum && !ranknum) {alert('该帖文是热帖，请填写点赞数和排名数'); return;} "+
+
+														"chrome.extension.sendMessage({method:'cutscreen',key:obj},function(response){});"+  //(bee:截图在这里呢)
+														"$(this).dialog('close');}, "+
+															"'取消截屏':function(event,ui){ $('.pf_button').show();"+
+															"$(this).dialog('close'); } } }); "+
+															"$('.ui-dialog').css({'opacity':'1','-webkit-transform':'scale(1)'});"+
+															"$('#ui-dialog-title-1').css({'padding':'0px','padding-left':'5px'});";
+
+			    chrome.tabs.getSelected(null, function(tab) {
+					chrome.tabs.executeScript(tab.id,
+							{code:code2},
+							function(res){
+							    //console.log(res);
+							   sendResponse({data:res});
+					});
+				});
+			    sendResponse({});
+			    return true;
+
+
+			});
+		});
+
+		}
+	  
+	if (request.method == "mutiurl") {
+		
+	    var value = request.value;
+	    localStorage["mutiurl"] = value;
+	    var url = "html/mutiurlpost.html";
+	    pfinduct.createATabUrl(url);	
+	    	
+	}else if (request.method == "getLocalStorage"){
+        	var data = JSON.stringify(localStorage);
+        	sendResponse({data: data});
+	}else if(request.method == "setLocalStorage"){
+		var k = request.key;
+		var value = request.value;
+		localStorage[k] = value;
+		sendResponse({data: true});
+	}else if(request.method == "delLocalStorage"){
+		var k = request.key;
+		localStorage.removeItem(k);
+		sendResponse({data: true});
+	}else if(request.method == "getTask"){
+		sendResponse({data: localStorage['task']});
+	}else if(request.method == "getTaskNumber"){
+		var str = "{\"state1\":"+state1+",\"state2\":"+state2+"}";
+		sendResponse({data: str});
+	}else if(request.method == "openUrl"){
+		var url = request.key;
+		pfinduct.createATabUrl(url);
+	}else if(request.method == "saveToDB"){
+		//var currenturl = request.key;
+		//background.saveToDB(currenturl);
+	}else if(request.method == "deleteCookie"){
+		var url = request.url;
+		var name = request.name;
+		background.deleteCookie(url,name,function(){
+			
+			sendResponse({data:"ok"});
+		});
+		return true;
+	}else if(request.method == "complete"){
+		 var tabid = sender.tab.id;
+		 var task = TASK[tabid];
+		 var taburl = sender.tab.url;
+		 if(task){
+			 var tasktype = TASK.TYPE;
+	 
+			 if(tasktype=="autopublish"){
+				 publish(tabid,taburl,task);
+			 }else if(tasktype=="autologin"){
+				 login(tabid,taburl,task);
+			 }else if (tasktype == "mutiurltask"){
+					mutipublish(tabid,taburl,task);
+			 }
+		 }
+		 sendResponse({});
+	}else if(request.method == "screenshot"){
+		var obj = request.key;
+		screenshot.jietu(obj);
+		sendResponse({});
+	}else if (request.method == "captureImage"){
+		captureImage();
+	}else if (request.method == 'cutscreen'){
+		var obj = request.key;
+		background.jietu(obj);
+		sendResponse({});
+	}else if (request.method == 'newsreply'){
+	
+	} else {
+		var obj = request;
+		var hotKeyEnabled = HotKey.isEnabled();
+		switch (obj.msg) {
+		case 'capture_hot_key':
+			screenshot.handleHotKey(obj.keyCode);
+			break;
+		case 'capture_selected':
+			screenshot.captureSelected();
+			break;
+		case 'capture_window':
+			if (hotKeyEnabled) {
+				screenshot.captureWindow();
+			}
+			break;
+		case 'capture_area':
+			if (hotKeyEnabled) {
+				screenshot.showSelectionArea();
+			}
+			break;
+		case 'capture_webpage':
+			if (hotKeyEnabled) {
+				screenshot.captureWebpage();
+			}
+			break;
+		case 'original_view_port_width':
+			sendResponse(plugin.getViewPortWidth());
+			break;
+		default:
+			sendResponse({});
+		}
+        }
+        
+	});
+	
+	//tab更新
+//	chrome.tabs.onUpdated.addListener(
+//			function(tabid,changeInfo,newtab){
+//				var status = changeInfo.status;
+//				if(status=="complete"){//loading暂不考虑
+//					var task = TASK[tabid];
+//					if(task){
+//						var taburl = newtab.url;
+//						chrome.extension.onConnect.addListener(function(port) {
+//							  port.onMessage.addListener(function(msg) {
+//							    if (msg.taburl == taburl){
+//							    	//process();
+//							    }else{
+//							    }
+//							  });
+//						});
+//					}
+//				}
+//			}
+//	);
+	//tab删除的时候去除当前任务
+	chrome.tabs.onRemoved.addListener(
+			function(tabid,removeInfo){
+				if(TASK[tabid]){
+					//处理中断的时候的update
+					var task = TASK[tabid];
+					var id = task.ID;
+					var tasknum = task.NUM;
+					var tasktotalnum = task.TOTALNUM;
+					var successnum = tasktotalnum-tasknum-1;
+					if(successnum<0){
+						successnum = 0;
+					}
+					delete TASK[tabid];
+					background.changeProxyState("auto_detect");
+					updateTask(id,successnum);
+				}
+			}
+	);
+});
+
+/**登录过程 **/
+var login = function(tabid,taburl,task){
+	var code = task.CODE;
+	
+	if(code&&code!=''){
+		
+	}else{
+		var username = task.USERNAME;
+		var password = task.PASSWORD;
+		code = "autologin('"+username+"','"+password+"');";
+	}
+
+	chrome.tabs.executeScript(tabid,
+			{code:code},
+			function(data){
+			delete TASK[tabid];
+	});
+	
+};
+
+
+var mutipublish = function(tabid,taburl,task){
+	var config = task["config"];
+	var postdata = task["data"][0];
+	
+	var username = postdata["username"];
+	var password = postdata["password"];
+	var isrefresh = config["isrefresh"]
+	
+	var lastAction = function(){
+		//切换账号
+		if(username&&password){
+			var time = 0;
+			//前一个用户
+			var currentusername = task.currentusername;
+			//判断当前账号是否要切换
+			if(currentusername==username){
+				funcexecute(200);
+			}else{
+				switchCookies(tabid,taburl,username,password,isrefresh,1,function(result){
+					if(result=='true'){//切换账号成功
+						time = 0;//切换账号成功，延时设置为0
+					}else{//切换账号失败
+					}
+					if(!isrefresh){
+						funcexecute(time);
+					}else{
+					}
+					task.currentusername = username;
+				});
+			}
+		}else{
+			//没有账号的时候执行该发帖
+			funcexecute(0);
+		}
+	};
+	
+	
+	/**
+	 * time:延时时间
+	 * isrefresh：是否刷新
+	 */
+	var funcexecute = function(time){
+			//判断登录
+			chrome.tabs.executeScript(tabid,
+    				{code:"weblogin||cookielogin"},
+    				function(data){
+	    				if(data=='true'){
+	    					fatie(time);
+	    				}else{
+	    					alert("尚未登录！");
+	    				}
+    		});
+	};
+	
+	/**
+	 * time:延时时间
+	 * isrefresh：是否刷新
+	 */
+	var fatie=function(time){
+		var  currenturl = "";
+		chrome.tabs.getSelected(null,function(tab){
+			currenturl = tab.url;
+			//console.log(postdata);
+			if (postdata["url"] == currenturl && postdata["opened"] == "1") {
+				var title = postdata["mtitle"];
+				var content = postdata["matcontent"];
+				var wordlimit =config["wordlimit"];
+				var tlimit = wordlimit["title"];
+				var climit = wordlimit["content"];
+				var executeJs =  config["js"];
+						//计算发帖内容
+					var _title = title.sub(tlimit).replace(/\'/g,'\\\'').replace(/\"/g,'\\\"');
+					var _content = content.sub(climit).replace(/\'/g,'\\\'').replace(/\"/g,'\\\"').replace(/\r/g,'\\\r').replace(/\n/g,'\\\n');
+					executeJs = executeJs.replace(/\$PFTITLE/,_title).replace(/\$PFCONTENT/,_content);
+					
+					setTimeout(function(){
+						chrome.tabs.executeScript(tabid,
+								{code:executeJs},
+								function(data){
+									setTimeout(function(){
+										
+								//		alert("这里回传！");
+										task["data"].splice(0,1);
+										
+									//	chrome.tabs.update(tabid, {"url":task[0]["taskurl"]}, //function(tab){task[0]["opened"]=1;console.log(tab.url)})
+									},1000);
+									
+								});
+					},1000);
+			}else{
+				chrome.tabs.update(tabid, {"url":postdata["url"]}, function(tab){task["data"][0]["opened"]=1;console.log(tab.url);})
+			}
+		
+		
+		})
+
+	}
+		lastAction();
+	}
+		
+
+/**发帖过程  **/
+var publish = function(tabid,taburl,task){
+	var taskstate = task.STATE;
+
+	if(taskstate!=1){//1代表开启状态
+		return;
+	}
+
+	var taskStartUrl = task.URL;
+	var tasknum = task.NUM;
+	var tasktotalnum = task.TOTALNUM;
+	var taskconfig = task.config;
+	var taskmaterial = task.MATERIAL;
+	var id = task.ID;
+	if(!taskmaterial||taskmaterial.length==0){
+		alert("选择素材为空！！！");
+		return;
+	}
+		
+	var taskEndUrl = taskconfig.endurl;
+	 
+	console.log("taburl : " + taburl + "  taskEndUrl : " + taskEndUrl + " testres : " + taskEndUrl.test(taburl));
+	
+	//未登陆验证url
+	var taskRegUrl = taskconfig.regurl;
+	//需要执行的js
+	var executeJs = taskconfig.js||"";
+	//cookie切换是否要刷新
+	var isrefresh = taskconfig.isrefresh;
+	
+	//字数限制
+	var tlimit = taskconfig.wordlimit.title||50;
+	var climit = taskconfig.wordlimit.content||5000;
+	//时间限制
+	var timelimit_cfg = (taskconfig.timelimit||0)*1000;
+	//登录狗是否支持
+	var isloginsupport = taskconfig.isloginsupport;
+	//发帖或回帖
+	var resulttype = taskconfig.resulttype;
+	//论坛或板块名称
+	var forumname = taskconfig.forumname;
+	//是否删除cookie
+	var deletecookie = taskconfig.deletecookie;
+	//取素材
+	var index = tasktotalnum-tasknum;
+	index = index>=0?index:0;
+	if(tasknum>0){
+		var currentMaterial = taskmaterial[index];
+		var title = currentMaterial.TITLE;
+		var content = currentMaterial.CONTENT;
+		var username = currentMaterial.USERNAME;
+		var password = currentMaterial.PASSWORD;
+		var host = currentMaterial.HOST;
+		var port = currentMaterial.PORT;
+		
+		//网易论坛特殊处理
+		var _njtaburl = "";
+		var _neteasy = false;
+		if(/^http:\/\/(.*)\.163\.com(.*)/.test(taskStartUrl)){
+		//网易论坛回复后页面url会发生改变，需要处理
+			_njtaburl = taburl.replace(/\,\d+\./, "\.").replace(/\//g,"\\/").replace(/\./g,"\\.").replace(/\#\d+/,".*");
+			var re = new RegExp(_njtaburl);
+			_neteasy = re.test(taskStartUrl);
+		}
+		//将回复后的页面处理为一个正则表达式然后去判断是否和开始url匹配，可以判断出是否需要继续执行
+		
+ 
+ 
+		if(_neteasy || taburl==taskStartUrl){
+		var timelimit = 0;
+		
+//		if(taburl==taskStartUrl){
+			if(index==0){
+				//第一次，不需要延时
+				timelimit=0;
+				//第一次，需要刷新
+				isrefresh=true;
+			}
+			
+			/**
+			 * time:延时时间
+			 * isrefresh：是否刷新
+			 */
+			var fatie=function(time){
+				//传入的延时参数
+				if(time!=null&&time>=0){
+					timelimit = time;
+				}
+			 
+		    	//计算发帖内容
+		    	var _title = title.sub(tlimit).replace(/\'/g,'\\\'').replace(/\"/g,'\\\"');
+				var _content = content.sub(climit).replace(/\'/g,'\\\'').replace(/\"/g,'\\\"').replace(/\r/g,'\\\r').replace(/\n/g,'\\\n');
+				executeJs = executeJs.replace(/\$PFTITLE/,_title).replace(/\$PFCONTENT/,_content);
+				executeJs += ";pageInfoData";
+				//执行发帖
+		    	setTimeout(function(){
+			 
+		    		chrome.tabs.executeScript(tabid,
+		    				{code:executeJs},
+		    				function(data){
+		    					setTimeout(function(){
+		    						//回帖 回传
+			    					if(resulttype=="2"){
+			    						var displayname="";
+			    						var accountname="";
+			    						if(!isrefresh){//没刷新，从任务中取用户
+			    							accountname = username;
+			    							
+			    						}else if(data[0]){
+			    							displayname = data[0].displayname||"";
+			    							forumname = data[0].forumname||"";
+			    						}
+			    						
+			    						sendBack(taburl,displayname,accountname,"",content,resulttype,forumname);
+			    						
+
+			    					}
+			    					
+		    						tasknum--;
+		    						//数量递减
+		    						TASK[tabid].NUM=tasknum;
+		    					},1000);
+		    					
+		    				});
+		    	},timelimit);
+			};
+			
+			/**
+			 * time:延时时间
+			 * isrefresh：是否刷新
+			 */
+			var funcexecute = function(time){
+				if(index==0){//第一次发帖
+					//判断登录
+					chrome.tabs.executeScript(tabid,
+		    				{code:"weblogin||cookielogin"},
+		    				function(data){
+			    				if(data=='true'){
+			    					fatie(time);
+			    				}else{
+			    					alert("尚未登录！");
+			    				}
+		    		});
+				}else{
+					fatie(time);
+				}
+			};
+			
+			var lastAction = function(){
+				//切换账号
+				if(isloginsupport&&username&&password){
+					var time = null;
+					//前一个用户
+					var currentusername = task.currentusername;
+					//当前账号是否切换成功
+					var switchstate = currentMaterial.switchstate;
+					//判断当前账号是否要切换
+					if(currentusername==username){
+						time=timelimit_cfg;
+						if(switchstate){
+							time=0;
+						}
+						funcexecute(time);
+					}else{
+						switchCookies(tabid,taburl,username,password,isrefresh,deletecookie,function(result){
+							if(result=='true'){//切换账号成功
+								time = 0;//切换账号成功，延时设置为0
+								currentMaterial.switchstate=true;
+							}else{//切换账号失败
+								currentMaterial.switchstate=false;
+							}
+							if(!isrefresh){
+								funcexecute(time);
+							}else{
+							}
+							task.currentusername = username;
+						});
+					}
+				}else{
+					//没有账号的时候执行该发帖
+					funcexecute();
+				}
+			};
+			
+			//切换代理
+			if(host&&port){
+				background.switchProxy(host,port,lastAction);
+			}else{
+				lastAction();
+			}
+			
+			
+		}else if(taskEndUrl.test(taburl)){
+			
+			chrome.tabs.update(tabid,
+					{url:taskStartUrl},
+					function(tab){}
+			);
+		}else if(taskRegUrl!=null&&taskRegUrl.test(taburl)){
+			//切换账号
+			if(isloginsupport&&username&&password){
+				//当前账号是否切换成功
+				var switchstate = currentMaterial.switchstate;
+				if(switchstate==null){//未切换过
+					switchCookies(tabid,taburl,username,password,false,deletecookie,function(result){
+						if(result=='true'){//切换账号成功
+							currentMaterial.switchstate=true;
+							chrome.tabs.update(tabid,
+									{url:taskStartUrl},
+									function(tab){}
+							);
+							
+						}else{//切换账号失败
+							alert("任务账号有问题，请重新设置！");
+							currentMaterial.switchstate=false;
+						}
+						task.currentusername = username;
+					});
+				}else if(switchstate==false){//切换失败
+					alert("任务账号有问题，请重新设置！");
+				}
+			}else{
+				//没有账号的时候执行该发帖
+				alert("当前尚未登录！");
+			}
+			
+			
+		}
+	}else{
+	
+		delete TASK[tabid];
+		updateTask(id,index);
+//		background.changeProxyState("auto_detect");
+		alert("已执行完"+index+"个任务！");
+	}
+};
+
+background.init=function(){
+	var result = false;
+	var localuser = pfinduct.getStorageValue("user","");
+	if(!localuser){//未配置参数
+		//打开配置界面
+		background.openOptions();
+		return;
+	}
+	var pfinducturl = localuser.pfinducturl;
+	var userid = localuser.userid;
+	var authkey = localuser.authkey;
+	if(authkey==""){
+		return;
+	}
+	var jsondata = new Object();
+	jsondata.authkey=authkey;
+	var jsondatastr = JSON.stringify(jsondata);
+	var data = {user:jsondatastr};
+	$.ajax({
+			type: "POST",
+			url: pfinducturl+"/chrome!loginSystem.action",
+			async:false,
+			data:data,
+			error: function(msg){
+//				alert("导控系统连接异常！请检查！");
+			},
+			success: function(dataStr){
+				var obj = JSON.parse(dataStr);
+				var thisuserid = parseInt(obj.userid);
+				//userid有效
+				if(!isNaN(thisuserid)&&thisuserid>0){
+					//与原userid不相同
+					if(obj.userid!=userid){
+						var user = new Object();
+						user.userid=obj.userid;
+						user.authkey=obj.authkey;
+						user.pfinducturl=pfinducturl;
+						localStorage.setItem("user",JSON.stringify(user));
+						
+						new pfinduct.task().deleteTask();
+					}
+					result = true;
+				}else{
+					alert("请检查插件配置的用户名或密码！");
+				}
+			}
+	});
+	return result;
+};
+
+/** 获取任务数 **/
+background.getTask=function(){
+	var pfinducturl = pfinduct.getStorageValue("user","pfinducturl");
+	if(!pfinducturl){
+		console.log("导控url有误！");
+		chrome.browserAction.setTitle({title:"舆情导控插件"});
+		chrome.browserAction.setBadgeText({text:""});
+		return;
+	}
+	var userid = pfinduct.getStorageValue("user","userid");
+	var jsondata = new Object();
+	jsondata.userid=userid;
+	jsondata.state="";
+	jsondata.flag="number";
+	var jsondatastr = JSON.stringify(jsondata);
+	var data = {condition:jsondatastr};
+	$.ajax({
+			type: "POST",
+			url: pfinducturl+"/chrome!getTask.action",
+			async:false,
+			data:data,
+			dataType :"json",
+			error: function(msg){
+				state1=0;
+				state2=0;
+				//alert("导控系统连接异常！请检查！");
+			},
+			success: function(data){
+				if(data===null||data==""){
+					state1 = 0;
+					state2 = 0;
+				}else{
+					state1=0;
+					state2=0;
+					$.each(data, function(i,item){
+						var state = item.STATE;
+						var snumber = parseInt(item.SNUMBER);
+						var number = isNaN(snumber)?0:snumber;
+						if(state=="1"){
+							state1=number;
+						}else if(state=="2"){
+							state2=number;
+						}
+					});
+					
+				}
+		}
+	});
+	
+	var taskNumber = state1+state2;
+	var taskTitle = "【未签收】任务："+state1+";【执行中】任务："+state2;
+	if(taskNumber>0){
+		chrome.browserAction.setTitle({title:taskTitle});
+		chrome.browserAction.setBadgeText({text:taskNumber+''});
+	}else{
+		chrome.browserAction.setTitle({title:"舆情导控插件"});
+		chrome.browserAction.setBadgeText({text:""});
+	}
+};
+
+
+background.openOptions=function() {
+	var url = "html/options.html";
+	pfinduct.createATabUrl(url);
+	
+};
+
+background.mutiTaskExcute=function(data,func){
+	var url = data.URL;
+	chrome.tabs.create({
+		url: url,
+		selected:true
+	},
+	function(tab){
+		//设置任务
+		var tabid=tab.id;
+		TASK["TYPE"] = "autopublish";
+		TASK[tabid]=data;
+		if(typeof func=='function'){
+			func(tabid);
+		}
+	});
+};
+
+
+background.saveToDB=function(currenturl){
+	var db = getDB();
+	if(!db){
+		//alert("创建数据库失败！");
+	}else{
+		db.transaction(function(tx) {
+			   tx.executeSql('CREATE TABLE IF NOT EXISTS test (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, mytitle TEXT, timestamp REAL)',[],function(){},function(){
+    				   //alert("建表失败！");
+			   });
+		});
+		
+		db.transaction(function(tx) {
+			tx.executeSql("select count(*) cnumber from test where mytitle=?",[currenturl],function(tx, result){
+				var cnumber = result.rows.item(0)['cnumber'];
+				if(cnumber>0){
+					//alert(currenturl+"已存在！！！");
+				}else{
+					tx.executeSql("INSERT INTO test (mytitle,timestamp) values(?, ?)", [currenturl, new Date().getTime()], function(){
+						//alert(currenturl+"插入成功！！！");
+					}, null);
+				}
+			},function(){
+				//alert("插入失败！");
+			});
+			
+		});
+	}
+};
+
+function getDB(){	
+   var DB=null;
+   try {
+       if (!window.openDatabase) {
+           alert('not supported');
+       } else {
+           var shortName = 'pfinductDatabase';
+           var version = '1.0';
+           var displayName = 'pfinductDatabase desc';
+           var maxSize = 4*1024*1024;
+           DB = openDatabase(shortName, version, displayName, maxSize);
+       }
+   } catch(e) {
+       alert("Error creating the database");
+   }
+   return DB;
+}
+
+function initTable(){
+	//初始化db
+	db=getDB();
+	if(db){
+		db.transaction(function (tx) {
+		   tx.executeSql('CREATE TABLE IF NOT EXISTS PFINDUCTMUTITASK (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,NAME TEXT NOT NULL, TASKJSON TEXT NOT NULL, CREATETIME REAL NOT NULL,EXECUTETIME REAL,STATE TEXT,SUCCESSNUM INTEGER)',
+			   [],
+			   function(){},
+			   function(){
+				   alert("创建表失败！");
+			   });
+		});
+	}
+}
+/**
+ * 取当前界面的url
+ */
+function getcurrUrl(){
+    var code = "window.location.href",url = "";
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.executeScript(tab.id,
+				{code:code},
+				function(res){
+				    console.log(res);
+					url = res;		
+		});
+	});
+	return url;
+}
+/**
+ * 操作数据库，执行sql语句
+ * @param db
+ * @param sql
+ * @param param
+ * @param callback（array）返回一个结果数组对象
+ */
+function executeSql(db,sql,param,callback){
+	db.transaction(function(tx) {
+	   tx.executeSql(sql,param,
+		function(tx,result){//成功
+		   if(result){
+			   var array = [];
+			   for(var i = 0; i < result.rows.length; i++){
+					 var obj = result.rows.item(i);
+					 array.push(obj);
+			   }
+			   if(typeof callback == 'function'){
+				   callback(array);
+			   }
+		   }
+	   },function(){//失败
+		   alert("本地数据库操作失败！");
+	   });
+	});
+}
+
+background.mutiurlTaskExecute=function(data,func){
+	var url = data["data"][0]["url"];
+
+	data["data"][0]["opened"] = 1;
+	chrome.tabs.create({
+		url: url,
+		selected:true
+	},
+	function(tab){
+		//设置任务
+		var tabid=tab.id;
+		
+		TASK["TYPE"] = "mutiurltask";
+		TASK[tabid]=data;
+		if(typeof func=='function'){
+			func(tabid);
+		}
+	});
+}
+
+/**
+ * 切换账号
+ * @param tabid
+ * @param currenturl
+ * @param username
+ * @param password
+ */
+function switchCookies(tabid,currenturl,username,password,isrefresh,deletecookie,callback){
+
+	var pfinducturl = pfinduct.getStorageValue("user","pfinducturl");
+	var executeJs = "publicpfinduct.switchCookies('"+pfinducturl+"','"+currenturl+"','"+username+"','"+password+"',"+isrefresh+","+deletecookie+");";
+	chrome.tabs.executeScript(tabid,{code:executeJs},callback);
+}
+
+function updateTask(id,successnum){
+	var pfinducturl = pfinduct.getStorageValue("user","pfinducturl");
+	var data = {};
+	data.id = id;
+	data.state = "2";
+	data.successnum = successnum;
+	var datastr = JSON.stringify(data);
+	$.ajax({
+		type:'post',
+		url:pfinducturl+'/chrome!getData.action',
+		data:{"type":"updateTask","mdata":datastr},
+		async:false,
+		dataType:"json",
+		success:function(res){
+			
+		}
+	});
+}
+function captureImage(){
+	var imagedata = {};
+//	var windowid = 0;
+//	chrome.windows.getCurrent(function (window){windowid = window.id;console.log(window.id);} );
+	chrome.tabs.captureVisibleTab(null,{format:'png'},function(img) {
+		console.log(img);
+		imagedata = img;
+	});
+	return imagedata;
+}
+/**
+ * 回帖回传
+ * @param url
+ * @param displayname
+ * @param title
+ * @param content
+ * @param resulttype
+ * @param forumname
+ */
+function sendBack(url,displayname,accountname,title,content,resulttype,forumname){
+	var imagedata = captureImage();
+	console.log(imagedata);
+	var pfinducturl = pfinduct.getStorageValue("user","pfinducturl");
+	var userid = pfinduct.getStorageValue("user","userid");
+	
+	var taskstr = localStorage['task'];
+	var taskidnum = -1;
+	if(taskstr==null||taskstr==""){
+		taskidnum = -1;
+	}else{
+		var task=JSON.parse(taskstr);
+		var taskid=task.taskid;
+		taskidnum = parseInt(taskid);
+		if(isNaN(taskidnum) || taskidnum < -1 ){
+			taskidnum = -1;
+		}
+	}
+	
+	/*
+	if(taskstr==null||taskstr==""){
+		alert("当前任务为空，请设置当前任务!");
+		return;
+	}
+	var task=JSON.parse(taskstr);
+	var taskid=task.taskid;
+	var taskidnum = parseInt(taskid);
+	if(isNaN(taskidnum)||taskidnum<=0){
+		alert("当前任务为空，请设置当前任务!");
+		return;
+	}
+	*/
+	if (title && 50 < title.length) {
+		title = title.substring(0,50);
+	}
+	var jsondata = new Object();
+	jsondata.url = url;
+	jsondata.forumname = forumname;
+	jsondata.forumurl = "";
+	jsondata.displayname = displayname;
+	jsondata.accountname = accountname;
+	jsondata.taskid = taskidnum;
+	jsondata.userid = userid;
+	jsondata.title = title;
+	jsondata.content = content;
+	jsondata.posttime = new Date().pattern("yyyy-MM-dd HH:mm");
+	jsondata.resulttype = resulttype;
+	var jsondatastr = JSON.stringify(jsondata);
+	var data = {taskResult:jsondatastr};
+	
+	$.ajax({
+		type: "POST",
+		url: pfinducturl+"/chrome!addToTaskResult.action",
+		data:data,
+		success: function(msg){
+			if(msg=='1'){
+				//alert("回传成果成功！！！");
+			}else if(msg=='2'){
+			}else {
+				alert("回传成果失败！！！");
+			}
+		},
+		error: function(msg){
+			alert("回传异常！！！");
+		}
+	});
+}
+
+background.deleteCookie=function(url,names,callback){
+	chrome.cookies.getAll({url:url}, function(cookies){
+		console.log(cookie);
+		if (cookies.length) {
+			for(var i in cookies){
+				var cookie = cookies[i];
+				if(i!=cookies.length-1){
+					chrome.cookies.remove({url:url,name:cookie.name,storeId:"0"});
+				}else{
+					chrome.cookies.remove({url:url,name:cookie.name,storeId:"0"},function(){
+						callback();
+					});
+				}
+			}
+		}else{
+			callback();
+		}
+		
+	});
+};
+
+background.switchProxy=function(host,port,callback){
+	var config = {mode: "fixed_servers",
+				  rules: {    
+					singleProxy:{host:host,port:port,scheme:"http"},
+				  }
+				 };
+	chrome.proxy.settings.set(
+	    {value: config, scope: 'regular'},
+	    callback);
+};
+
+/**
+ * mode:["direct", "auto_detect", "system"]
+ */
+background.changeProxyState=function(mode,callback){
+	var config = {mode: mode};
+	chrome.proxy.settings.set(
+		    {value: config},
+		    callback);
+};
+
+background.autologin=function(data,func){
+	var url = data["LOGINURL"];
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.create({
+			url: url,
+			index: tab.index + 1
+		},
+		function(tab){
+			//设置任务
+			var tabid=tab.id;
+			TASK["TYPE"] = "autologin";
+			TASK[tabid]=data;
+			if (1 == data['LOGINTYPE']) {  //1表示需要后台登陆
+				switchCookies(tabid,url,data['USERNAME'],data['PASSWORD'],1,1,function(){})
+			}
+			
+			if(typeof func=='function'){
+				func(tabid);
+			}
+		});
+	});
+	
+};
+/*-----------截图上传----------------*/
+//界面传过来的数据
+background.pagedata={};
+background.path="";
+background.jietu=function(data){
+	console.log("background.jietu : " + JSON.stringify(data));
+	var url = data.url;
+	if(url){//回传数据截图
+	}else{//普通截图
+//		var code = "var data=pageInfoData;if(!data){data={};}$('#floatDiv').hide();var url=window.location.href;var title=$('title').text();data.url=url;if(!data.title){data.title=title;} response(data);";
+//		screenshot.sendMessage({msg: 'executeScript',code:code},function(response){
+//			data.url=response.url;
+//			data.title=response.title;
+//			data.accountname=response.accountname;
+//			data.displayname=response.displayname;
+//			data.forumname=response.forumname;
+//			data.forumurl=response.forumurl;
+//		});
+		var code = "var data=pageInfoData;if(!data){data={};}$('#floatDiv').hide();var url=window.location.href;var title=$('title').text();data.url=url;if(!data.title){data.title=title;} data;";
+		chrome.tabs.getSelected(null, function(tab) {
+			chrome.tabs.executeScript(tab.id,
+					{code:code},
+					function(res){
+						console.log(res);
+					
+				var response = res[0];
+				data.url=response.url;
+				var title = response.title || data.title;
+				if (title &&  80 < title.length) {
+					data.title = response.title.substring(0,80);	
+				}else{
+					data.title=response.title;
+				}
+//				data.accountname=response.accountname || data.accountname;
+//				data.displayname=response.displayname || data.displayname;
+				data.forumname=response.forumname || data.forumname;
+				data.forumurl=response.forumurl || data.forumurl;
+				
+			});
+		});
+		
+	}
+	
+	background.pagedata=data;
+	console.log("data :　" + JSON.stringify(data));
+	console.log(background.pagedata);
+	setTimeout(function(){
+		chrome.tabs.captureVisibleTab(null,{format:'png'},function(img) {
+			//console.log(img);
+			uploadImg(img);
+		});
+	},100);
+	
+};
+background.showNotification=function() {
+ //   var htmlNotification = window.webkitNotifications.createHTMLNotification('notification.html');
+  //  htmlNotification.show();
+	 var htmlNotification = window.webkitNotifications.createNotification('notification.html',"", "");
+    
+    
+    htmlNotification.show();
+  }
+  
+var newsreply = {
+	"newsReplyDing" : function(dingobj){
+		$.ajax({
+			type:'get',
+			url:pfinducturl+'/chrome!getData.action',
+			data:{"type":"uploadPhotoesAndResult","mdata":jsondatastr},
+			async:false,
+			dataType:"json",
+			success:function(data){
+				var issuccess = data.issuccess;
+				if(issuccess=='0'){
+					alert("回传失败！");
+				}else if(issuccess==1){
+	//				screenshot.path=data.path;
+	//				screenshot.showNotification();
+	//				background.showNotification();
+					alert("回传成功！");
+				}else if(issuccess=='2'){
+					alert("已回传过！");
+				}
+		}
+	});
+	}
+};  
+function uploadImg(imgdata){
+	var pfinducturl = pfinduct.getStorageValue("user","pfinducturl");
+	if(!pfinducturl){
+		return;
+	}
+	//console.log(imgdata);
+	//图片数据上传
+	background.pagedata.imgdata = imgdata;
+	
+	//console.log(background.pagedata);
+	var jsondatastr = JSON.stringify(background.pagedata);
+	//console.log(jsondatastr);
+	
+	$.ajax({
+		type:'post',
+		url:pfinducturl+'/chrome!getData.action',
+		data:{"type":"uploadPhotoesAndResult","mdata":jsondatastr},
+		async:false,
+		dataType:"json",
+		success:function(data){
+			var issuccess = data.issuccess;
+			if(issuccess=='0'){
+				alert("回传失败！");
+			}else if(issuccess==1){
+//				screenshot.path=data.path;
+//				screenshot.showNotification();
+//				background.showNotification();
+				//alert("回传成功！");  //(bee:我注释掉的)
+				console.log("回传成功！");
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+					chrome.tabs.sendMessage(tabs[0].id, {sendState: true, info: "回传成功!"}, function(response) {
+					});
+				});
+			}else if(issuccess=='2'){
+				//alert("已回传过！");  //(bee:我注释掉的)
+				console.log("已回传过！");
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+					chrome.tabs.sendMessage(tabs[0].id, {sendState: false, info: "已回传过!"}, function(response) {
+					});
+				});
+			}
+		}
+	});
+
+	var code = '$("#floatDiv").show();$(".pf_button").show();';
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.executeScript(tab.id,
+				{code:code},
+				function(data){
+					
+		});
+	});
+}

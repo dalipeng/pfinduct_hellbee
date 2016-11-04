@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>多url顶帖</title>
+<style type="text/css">
+	a { color: #036ca3; }
+	a:active { background: none; }
+	a:link {					/*������ɫ*/
+		/*font-weight: bold;*/
+		color:  #333366;
+		text-decoration: unline;
+	}
+	a:visited {					/*���ӷ��ʺ���ɫ*/
+		color: #333366;
+		text-decoration: unline;
+	}
+	a:hover {					/*����ƶ���������ɫ*/
+		color: #FF0000;
+	}
+	.g-body{width:800px;border:1px #fefefe;height:100%}
+	.g-head{width:800px;height:30px;border:1px solid #efefef;color:#444;font-weight:bold;line-height:30px;text-indent:1em;background:-webkit-linear-gradient(#fefefe,#e2e2e2); font-family: 'Karla', sans-serif; font-weight: bold; color: #317eac;}
+	.g-module{width:800px;text-indent:1em;border:1px solid #efefef;border-top:0px; }
+	.g-module2{width:800px;text-indent:1em;border:1px solid #efefef;border-top:0px;position: absolute; background: white; }
+	.m-title{height:30px;border:1px solid #efefef;line-height:30px;}
+	.m-body{}
+	.grid{background-color: #fff; }
+	.grid tbody td {padding: 6px 4px; border-bottom: 1px solid #e2e2e2;  empty-cells: show; word-wrap: break-word; word-break: break-all; white-space: normal;}
+	.u-btn{text-indent:0px;display:inline-block;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;padding:0 12px;height:28px;line-height:28px;border:1px solid #2d88bf;border-radius:5px;font-size:12px;letter-spacing:1px;text-align:center;vertical-align:middle;cursor:pointer;word-wrap:normal;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);text-shadow:0 -1px rgba(0,0,0,0.2);background:-webkit-gradient(linear,0% 0%,0% 100%,from(#6dbde4),to(#399dd8));background:-webkit-linear-gradient(#6dbde4,#399dd8);background:-moz-linear-gradient(#6dbde4,#399dd8);background:-ms-linear-gradient(#6dbde4,#399dd8);background:linear-gradient(#6dbde4,#399dd8);}
+	.u-btn,.u-btn:hover{color:#fff;text-decoration:none;}
+	.u-btn:hover,.u-btn:focus{background:#399dd8;}
+	.btn-l{height: 115px; font-size: 13px; width: 20px;margin-left:5px; word-break: normal; word-wrap: break-word;white-space: normal; }
+	
+	.m-dlgtitle{height:30px; line-height: 30px; background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(0,0,0,0.1) 100%); font-family: 'Karla', sans-serif; font-weight: bold; color: #317eac; border-bottom: 1px solid #DEDEDE;text-rendering: optimizelegibility;box-shadow: 0 0 10px rgba(189, 189, 189, 0.6); -webkit-box-shadow: 0 0 10px rgba(189, 189, 189, 0.8);}
+	
+	.m-mclass{padding-top:10px;padding-bottom:10px;border-bottom:1px solid #ccc;text-indent:0px;}
+	
+	.u-mcname{width: 85px;height: 20px; line-height: 20px; text-align: center; padding: 0 10px;   margin-right: 5px; display: inline-block; position: relative;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+	.m-mtitle{padding-bottom:10px;overflow: hidden; word-break: normal; white-space: nowrap; text-overflow: ellipsis; width: 780px;}
+	.m-mitem{width:800px; padding-top:15px; border-bottom:1px dashed #CCC;height:140px;}
+	.m-mitem:hover{background:#F6F6F8}
+	.m-mcontent{padding:10px; padding-top:3px;text-indent:0em;line-height:1.4}
+	.m-selectbtn{text-align:center;padding-bottom:10px;}
+	.m-page { height: 30px;   display: inline-block; }
+	.m-page span{height: 14px; padding: 5px; margin: 0 3px; display: inline; border: 1px solid #ccc; line-height: 14px;cursor:pointer}
+	.nor{background:#ccc}
+	.closeico{background:url(../img/facebook_dlg_close.png);background-position:0 0;width: 16px; height: 16px; display: inline-block; float: right; margin-top: 7px; margin-right: 5px;}
+	.closeico:hover{background-position:-15px 0}
+    .c-account{display:inline-block; height:20px;line-height:20px;border: 1px solid #efefef; border-radius: 5px; padding: 5px; cursor: pointer; width: 120px; text-overflow: ellipsis; white-space: nowrap;overflow:hidden;margin: 5px;}
+    .delmater{background:url(../img/continue/icoSpring.png);background-position:-16px -16px;width: 16px;cursor:pointer; height: 16px; display: inline-block; float: right; margin-top: 7px; margin-right: 5px;}
+    .delmater:hover{background:url(../img/continue/icoSpringHover.png);background-position:-16px -16px;}
+    .u-username{overflow: hidden; word-break: normal; white-space: nowrap; text-overflow: ellipsis; width: 160px;display:inline-block;}
+</style>
+<link href="../js/tip/css/jquery.poshytip.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="../js/mutiurlpost.js"></script>
+<script type="text/javascript" src="../js/tip/jquery.poshytip.js"></script>
+<script type="text/javascript" src="../js/muti-config.json"></script>
+
+
+</head>
+
+<body>
+	<div class="g-body">
+		<div class="g-head">导控插件贴文设置界面</div>
+        <!-- 
+        <div class="g-module">
+            <div class="m-body">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="50%">
+                        <col width="25%">
+                        <col width="10%">
+                    </colgroup>
+                    <tbody>
+                        <tr align="left">
+                            <td>网文标题:</td>
+                            <td><a href="http://tieba.baidu.com/p/123456789" target="_blank">体重掉了12斤，哦也</a></td>
+                            <td colspan="2">发帖账号：习大大的粉丝</td>
+                        </tr>
+                        <tr align="left">
+                            <td>发帖标题:</td>
+                            <td colspan="2"><input type="text" style="width:100%"></td>
+                            <td rowspan="2" ><input type="button" class="u-btn btn-l" value="选择素材"/></td>
+                        </tr>
+                        <tr align="left" height="100">
+                            <td>发帖内容:</td>
+                            <td colspan="2"><textarea style="width:100%;height:80%">sdadasd</textarea></td>
+                        </tr>
+                    </tbody>
+                    
+                </table>    
+            </div>
+        </div>
+        	 -->	
+		<div class="g-module2" style="display:none" id="m-malistpad">
+			<div class="m-dlgtitle">导控插件素材选择<a href="javascript:void(0)" id="closepic" class="closeico"></a></div>
+			<div class="m-mclass" id="mclass">
+				<a href="javascript:void(0)" class="u-mcname">幽默笑话</a>
+				<a href="javascript:void(0)" class="u-mcname">手机APP</a>
+				<a href="javascript:void(0)" class="u-mcname">娱乐八卦</a>
+				<a href="javascript:void(0)" class="u-mcname">生活下跌</a>
+				<a href="javascript:void(0)" class="u-mcname">科学地理</a>
+			
+			</div>
+			<div class="m-mbody">
+				<dl style="margin-top:0px;" id="induct_mlist">
+					<dt class="m-mitem" >
+						<div class="m-mtitle"><b>标题： Napster回来了！扩张市场进驻欧洲14个国家</b></div>
+						<div class="m-mcontent"><b>摘要</b>：【Napster回来了！扩张市场进驻欧洲14个国家】6月5日讯，Rhapsody International旗下的Napster在欧洲又增加了14个国家市场，包括法国、西班牙、意大利和荷兰等。Napster服务的包月价格为10欧元。Rhapsody总裁约恩欧文称，Napster在美国、英国和德国的用户数量已经达到100万人。</div>
+						<div class="m-selectbtn">
+							<span class="u-btn">选择内容</span>
+						</div>
+						
+					</dt>
+					
+					<dt class="m-mitem" >
+						<div class="m-mtitle"><b>标题：Napster回来了！扩张市场进驻欧洲14个国家</b></div>
+						<div class="m-mcontent"><b>摘要</b>：【Napster回来了！扩张市场进驻欧洲14个国家】6月5日讯，Rhapsody International旗下的Napster在欧洲又增加了14个国家市场，包括法国、西班牙、意大利和荷兰等。Napster服务的包月价格为10欧元。Rhapsody总裁约恩欧文称，Napster在美国、英国和德国的用户数量已经达到100万人。</div>
+						<div class="m-selectbtn">
+							<span class="u-btn">选择内容</span>
+						</div>
+									
+					</dt>
+					
+					<dt class="m-mitem" >
+						<div class="m-mtitle"><b>标题： Napster回来了！扩张市场进驻欧洲14个国家</b></div>
+						<div class="m-mcontent"><b>摘要</b>：【Napster回来了！扩张市场进驻欧洲14个国家】6月5日讯，Rhapsody International旗下的Napster在欧洲又增加了14个国家市场，包括法国、西班牙、意大利和荷兰等。Napster服务的包月价格为10欧元。Rhapsody总裁约恩欧文称，Napster在美国、英国和德国的用户数量已经达到100万人。</div>
+						<div class="m-selectbtn">
+							<span class="u-btn">选择内容</span>
+						</div>
+						
+					</dt>
+				</dl>
+			</div>
+			<div class="m-page" id="m-pagenation">
+				<a href="javascript:void(0)" >上一页</a>
+				<a href="javascript:void(0)" >1</a>
+				<a href="javascript:void(0)" >2</a>
+				<a href="javascript:void(0)" >3</a>
+				<a href="javascript:void(0)" >4</a>
+				<a href="javascript:void(0)" >5</a>
+				
+				<a href="javascript:void(0)" >上一页</a>
+				
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

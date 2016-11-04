@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+.content{padding:8px 0px;}
+.leftBar{float:left;width:194px;padding-right:26px;background:url(../../img/continue/arrows.png) no-repeat 200px 130px}
+.rightBar{float:left;width:270px;*width:306px;}
+.pupopBottom{height:40px;padding-left:300px;padding-top:10px;}
+
+/*弹出框左侧快速输入框*/
+.count{width:25px;height:26px;line-height:26px;padding:0 0px 0 5px;margin-left:4px;border:1px #d3d8db solid;border-right:none}
+.countLabel {position:relative;display:inline-block;*top:-5px;}
+.countLabel span{display:inline-block;position:absolute;height:26px;line-height:26px;width:20px;top:-6px;*top:-9px;right:-56px;color:#b4b4b4;background:#fff;border:1px #d3d8db solid;border-left:none;text-align:center}
+.grayButton,.grayButton:hover{float:right;margin:0px;}
+.grayButton span,.grayButton:hover span{padding:0 8px;}
+
+/*弹出框左侧树列表*/
+.treeTop{width:157px;height:24px;padding:0 30px 0 5px;border:1px #d3d8db solid;line-height:24px;}
+.treeSearch{position:relative;margin:10px 0;width:192px;height:24px;}
+.treeSubmit{position:absolute;right:6px;top:5px;width:16px;height:16px;background:url(../../img/continue/glass.png) no-repeat;border:none;text-indent:-9999px;cursor:pointer}
+.tree{height:342px;padding:2px;border:1px #d3d8db solid;background:#fff;overflow:auto}
+.tree input{margin-right:6px;vertical-align:baseline}
+.tree dt{margin-bottom:4px;}
+.tree dd{height:24px;line-height:24px;margin-left:13px;padding:0 0 0 20px;color:#005e91;cursor:pointer}
+.tree dd:hover{background:#3178ba;color:#fff}
+.tree dd.select{color:#c5c5c5; background:none; cursor:default}
+
+/*弹出框右侧已选列表*/
+.listWrap{width:415px;height:241px;padding:10px;border:1px #d3d8db solid;border-bottom:none;background:#fff;overflow:auto}
+.listWrap li{display:inline-block;position:relative;float:left;height:23px;line-height:23px;margin:2px;padding:0 26px 0 6px;background:#f0f8fd;border:1px #d2e0e7 solid;white-space:nowrap;cursor:pointer}
+.listWrap li span{display:inline-block;position:absolute;top:8px;right:-3px;width:16px;height:11px;background:url(../../img/continue/close3.png) no-repeat;cursor:pointer}
+.listWrap li:hover,.listWrap li.hover{height:21px;line-height:21px;margin-top:2px;padding:0 25px 0 5px;background:#fffaee;border:2px #eda367 solid;}
+.listWrap li:hover span,.listWrap li.hover span{background:url(../../img/continue/close3Hover.png) no-repeat;top:7px;right:-3px;}
+.moverclose{width:16px !important;height:16px !important;background:url(../../img/continue/del.gif) no-repeat !important;top:2px !important;right:1px !important;}
+/*弹出框右侧素材预览*/
+.view {font-size:14px;margin:16px 0 6px 2px;color:#666;width:430px}
+.view span{font-weight:normal;color:#000}
+.view .edit{display:inline-block;float:right;height:16px;line-height:16px;padding:0 6px 0 18px;background:url(../../img/continue/icoSpring.png) no-repeat -64px -1px;cursor:pointer;font-size:12px;}
+.view .edit:hover{color:#ff5a00;background:url(../../img/continue/icoSpringHover.png) no-repeat -64px -1px}
+.viewContent{width:415px;height:154px;line-height:20px;padding:10px;background:#f9f9f9;overflow:auto;border:1px #D3D8DB solid;}
+.viewInput{display:none;width:415px;height:154px;line-height:20px;padding:9px;*padding-top:8px;background:#fff;border:1px #d3d8db solid;font-size:12px;overflow:auto;resize:none;}
+.save{display:none;position:relative;top:-8px;margin:-4px 0px}
+.save:hover{margin:-4px 0px}
+dd.mselected{color: #C5C5C5; background: none; cursor: not-allowed;}
+/*弹出框底部按钮*/
+.pupopBottom .BlueButton span{padding:0 18px;}
+
+.labelpointer {cursor:pointer}
+/*
+.mcount{color:white;width:16px;display:inline-block;background: -webkit-gradient(linear, left top, left bottom, from(#f00), to(#f00));border-radius: 10px;}
+*/
+.mcount{width:16px;display:inline-block;text-align:right;font-weight:bold;}
+/**任务标题缩略*/
+.mtitleelipse{width: 110px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;}
+/*素材预览标题*/
+.prvtitleelipse{width: 150px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;}
+/*素材标题缩略*/
+.titleelipse{width: 205px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;cursor:default}
+.accountelipse{width: 120px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;cursor:default;text-decoration: underline;}
+
+.delTitle{background:url(../../img/continue/del.gif);width:16px;height:16px;display: inline-block;margin-left:5px;}
+.mTtilediv{border-bottom:1px solid #F0F0F0; padding-top: 10px;font-size: 14px;}
+/**引用fui的select样式**/
+.fuiselect{position: absolute; border: 1px solid #AAA; width: 100%; height: 100%; color: #222; font-size: inherit; opacity: 0; filter: alpha(opacity = 0); outline: 0 none; z-index: 2; text-overflow: ellipsis; white-space: nowrap;margin: 0em; font: -webkit-small-control; color: initial; letter-spacing: normal; word-spacing: normal;
+text-transform: none; text-indent: 0px; text-shadow: none; display: inline-block; text-align: -webkit-auto; -webkit-appearance: menulist; box-sizing: border-box; -webkit-box-align: center; border: 1px solid; border-image: initial; white-space: pre; -webkit-rtl-ordering: logical; color: black; background-color: white; cursor: default;}
+.fuiseldiv{background-image: url(../../img/continue/isel_icombo.gif); background-repeat: no-repeat; background-position: right -25px; position: relative; height: 25px; display: inline-block; vertical-align: middle; overflow: hidden; }
+.fuiselspan{background-image: url(../../img/continue/isel_icombo.gif); background-repeat: no-repeat; color: #222; font-size: inherit; text-align: left; position: absolute; display: block; height: 25px; line-height: 25px; background-position: 0 0; text-indent: 6px; text-overflow: ellipse; white-space: nowrap; overflow: hidden; }

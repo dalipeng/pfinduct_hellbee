@@ -1,0 +1,51 @@
+#tool_box_dlg{
+    width: 120px;
+    background-color: #FFE4B5;
+    opacity: 0.7;
+    border-top: 8px solid orange;
+    border-bottom: 8px solid orange;
+    border-right: 8px solid orange;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+    text-align: center;
+    color: orange;
+    line-height: 3;
+    font-weight: bold;
+    font-size: 11pt;
+}
+#spacNumText{
+    background-color: #FFE4B5;
+    border: none;
+    border-bottom: 2px solid #FF8C00;
+    width: 20px;
+    font-size: 11pt;
+    color: #FF8C00;
+    text-align: center;
+}
+#autoPostBtn{
+    background: #FFA500;
+    border: 3px solid #FF8C00;
+    width: 100px;
+    height: 30px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #FFE4B5;
+}
+
+#bee_message_box{
+    height: 30px;
+    position: fixed;
+    top: 0px;
+    background-color: #ff6c08;
+    opacity: 0.7;
+    text-align: center;
+    z-index: 999;
+    font-size: 14pt;
+    font-weight:bold;
+    color: #fff;
+}
+
+.bee_tip{
+    color: #0000FF;
+    font-size: 8pt;
+}
