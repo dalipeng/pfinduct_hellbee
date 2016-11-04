@@ -464,33 +464,132 @@ function autologin(username,password){
 
 //小蜜蜂强势插入==============================================================
 //轮循发贴函数
-var replyCount = 0;
-function autoPostAll(dataArr, spaceNum) {
-	replyCount = dataArr.length;
-	bee.UI.showMessage("准备开始发贴...共"+dataArr.length+"条");
-	var $reply_page = $("#commentIframe").contents();
-	var $reply_txt = $reply_page.find("#top_textarea");
-	var $sub_btn = $reply_page.find("#top_post_btn");
-	var i = 0;
-	var postTimer = setInterval(function() {
-		bee.UI.showMessage("当前发帖: "+(i+1));
-		$reply_txt.val(bee.randStr(dataArr[i], spaceNum));
-		$sub_btn[0].click();    //提交按钮动作
-		i++;
-		if(i == dataArr.length) {
-			clearInterval(postTimer);
-			$reply_page.find("#loadMore>span")[0].click();  //点一下加载更多，用来显示各个回传按钮
-			if($("#bee_autoSendBack").attr("checked") == "checked") {
-				bee.UI.showMessage("准备开始回传...");
-				setTimeout(function () {
-					autoSendBack();
-				}, 2000);
+var PostMisc = {};
+PostMisc.userCount = null; //登录QQ号的数量
+PostMisc.currUserId = 0;
+PostMisc.account = null; //登录帐号的具体信息句柄
+PostMisc.sumPosts = 5; //本次意图发帖的数量
+PostMisc.currPostNum = 0; //当前发帖数量
+PostMisc.userChangePostNum = 10; //每次发多少贴后自动切换用户
+PostMisc.NickNameList = new Array();
+
+//需要3秒延迟时间得到PostMisc.userCount
+function init() {
+	PostMisc.sumPosts = parseInt($("#wantPostNum").val());
+	PostMisc.account = qq_com.getPageInfo(); //本脚本自带的页面账户信息
+	getUserCount();
+}
+
+//@param: num 就是一个用户顺序排序号  此函数登录过程可能需要等待6秒
+function changeUser(num) {
+	bee.UI.showMessage("更换账号中: 第"+(num+1)+"位QQ账号");
+	if($("#login a:first").html().indexOf("登录") <= 0) {    //首先判断如果当前已经登录了则退出登录
+		beeLogout();
+	}
+	setTimeout(function() {
+		$("#oneKey")[0].click();
+		setTimeout(function() {
+			//var logBox = $("#login_one_frame").contents().find("#qlogin_show");
+			var logBoxDoc = $("#login_one_frame")[0].contentWindow.document;   //bee:此处需要浏览器同源策略关闭
+			var logList = $(logBoxDoc).find("#qlogin_list");
+			setTimeout(function() {
+				var allA = $(logList).find("a");
+				$.each(allA, function(n, value) {
+					if(n == num) {
+						$(value)[0].click();
+					}
+				});
+			}, 2000);
+		}, 2000);
+	}, 2000);
+}
+
+//得到目前已经挂上的QQ数目,并且自动退出已有登录  需要3秒时间
+function getUserCount() {
+	if($("#login a:first").html().indexOf("登录") <= 0) {    //首先判断如果当前已经登录了则退出登录
+		beeLogout();
+	}
+	setTimeout(function() {
+		$("#oneKey")[0].click();
+		setTimeout(function() {
+			//var logBox = $("#login_one_frame").contents().find("#qlogin_show");
+			var logBoxDoc = $("#login_one_frame")[0].contentWindow.document;   //bee:此处需要浏览器同源策略关闭
+			var logList = $(logBoxDoc).find("#qlogin_list");
+			var nickNameList = $(logList).find(".nick");
+			$.each(nickNameList, function (n, value) {
+				PostMisc.NickNameList.push($(value).html());   //把所有登录的用户名记录到数组，以后判断是否为自己发的贴用
+			});
+			var allA = $(logList).find("a");
+			if(allA.length == 0 ) {
+				console.log("系统没有登录任何QQ账号");
+				alert("系统没有登录任何QQ账号");
 			}
-		}
-	}, 3000);
+			PostMisc.userCount = allA.length;
+		}, 1000);
+	}, 2000);
+}
+//需要1秒延迟时间
+function beeLogout() {
+	$(".menu-bd:first").css({
+		"display":"block",
+	});
+	setTimeout(function() {
+		$("#loginOut")[0].click();
+	}, 1000);
+}
+
+function getNextUserId() {
+	if(PostMisc.currUserId+1 == PostMisc.userCount) {
+		PostMisc.currUserId = 0;
+	}else {
+		++PostMisc.currUserId;
+	}
+	return PostMisc.currUserId;
+}
+
+function autoPostAll(dataArr, spaceNum) {
+	init();
+	changeUser(0);
+	setTimeout(function() {
+		bee.UI.showMessage("准备开始发贴...预计"+PostMisc.sumPosts+"条");
+		var $reply_page = $("#commentIframe").contents();
+		var $reply_txt = $reply_page.find("#top_textarea");
+		var $sub_btn = $reply_page.find("#top_post_btn");
+		var i = 0, y = 0;
+		var postTimer = setInterval(function() {
+			bee.UI.showMessage("当前发帖: "+(PostMisc.currPostNum+1));
+			$reply_txt.val(bee.randStr(dataArr[i], spaceNum));
+			$sub_btn[0].click();    //提交按钮动作
+			i++;
+			if(i == dataArr.length) {
+				i = 0;
+			}
+			if(PostMisc.userChangePostNum == y) {
+				y = 0;
+				changeUser(getNextUserId());
+			}
+			y++;
+			PostMisc.currPostNum++;
+			if(PostMisc.currPostNum == PostMisc.sumPosts) {
+				clearInterval(postTimer);
+				$reply_page.find("#loadMore>span")[0].click();  //点一下加载更多，用来显示各个回传按钮
+				if($("#bee_autoSendBack").attr("checked") == "checked") {
+					bee.UI.showMessage("准备开始回传...");
+					setTimeout(function () {
+						autoSendBack();
+					}, 2000);
+				}
+			}
+		}, 4500);
+	}, 4500);
 }
 function sendOne($btn) {
 	$(document.body).animate({scrollTop: $btn.offset().top-200}, 0);
+	var nickname = $btn.parent().find("span:first a:first").html();
+	if(PostMisc.NickNameList.toString().indexOf(nickname) < 0) {  //验证是否为自己发的帖子
+		console.log(nickname+"不再昵称列表");
+		return;
+	}
 	$btn.click();
 	setTimeout(function () {
 		$(".ui-dialog-buttonset button").first().click();
@@ -502,11 +601,11 @@ function autoSendBack() {
 	var $btnSet = $reply_page.find("pbutton:not(.pf_small)");
 	var index = 0;
 	var timerOne = setInterval(function() {
-		if(index == replyCount) {
+		if(index == PostMisc.sumPosts) {
 			clearInterval(timerOne);
 			setTimeout(function () {
 				bee.UI.showUI();
-				bee.UI.showMessage("回传完毕！共回传" + replyCount + "个帖子。");
+				bee.UI.showMessage("回传完毕！共回传" + index + "个帖子。");
 			}, 3000);
 			return;
 		}

@@ -48,6 +48,8 @@ bee.UI.prototype = {
         }).appendTo($(document.body));
         $("<span>随机空格数: </span>").appendTo($("#tool_box_dlg"));
         $("<input type=\"text\" id=\"spacNumText\" value=\"3\" /><br />").appendTo($("#tool_box_dlg"));
+        $("<span>本次发帖数: </span>").appendTo($("#tool_box_dlg"));
+        $("<input type=\"text\" id=\"wantPostNum\" value=\"100\" /><br />").appendTo($("#tool_box_dlg"));
         $("<span>是否自动回传&nbsp;</span>").appendTo($("#tool_box_dlg"));
         $("<input id=\"bee_autoSendBack\" type=\"checkbox\" checked=\"checked\" />").appendTo($("#tool_box_dlg"));
         $("<input type=\"button\" id=\"autoPostBtn\" value=\"开始回帖\" />").appendTo($("#tool_box_dlg"));
